@@ -1,10 +1,8 @@
 #include "TRADE.H"
 #include <time.h>
-static char *goods[4]={"Moonleaf","Fog dust","Dream drops","Star resin"};
-static char *cities[4]={"Blueport","Tin Junction","Lantern Bay","Copper Hill"};
 int main(int argc,char **argv)
 {
-    Market m;char cmd[64];long g,n;int i,e,rc;
+    Market m;char cmd[64],txt[96];long g,n;int i,e,rc;
     rngstate=(unsigned)time(NULL);market_reset(&m);
     if(argc>1&&!strcmp(argv[1],"/demo")) {
         rngstate=123;market_reset(&m);
@@ -15,12 +13,15 @@ int main(int argc,char **argv)
     for(;;) {
         clear();puts("DRUG WARS: BLUEPORT - original fictional trading game");
         puts("Imaginary contraband, prices and events. No real transactions.");
-        printf("Day %d/30  %s  Cargo %d/100\n",m.day,cities[m.city],cargo(&m));
+        printf("Day %d/30  %s  Coat %d/%d\n",m.day,cities[m.city],cargo(&m),m.cap);
         printf("Cash $%ld  Bank $%ld  Debt $%ld (5%% per travel day)\n",
             m.cash,m.bank,m.debt);
-        for(i=0;i<4;i++)printf("%d %-14s price $%4d   owned %d\n",
-            i+1,goods[i],m.price[i],m.qty[i]);
+        for(i=0;i<4;i++)printf("%d %-14s price $%4d %-5s owned %d\n",
+            i+1,goods[i],m.price[i],m.price[i]<250?"LOW":m.price[i]>750?"HIGH":"",
+            m.qty[i]);
+        printf("Rumor: %s runs cheapest in %s.\n",goods[m.rgood],cities[m.rcity]);
         puts("B buy  S sell  T travel  D deposit  W withdraw  P repay");
+        printf("C bigger coat (+30 room, $%ld)\n",COATCOST);
         puts("F final score  R restart  Q quit. Numbers use Enter.");
         if(m.day==30)puts("Last market: sell or manage money, then F to finish.");
         printf("Action: ");if(!fgets(cmd,sizeof(cmd),stdin))break;
@@ -28,6 +29,7 @@ int main(int argc,char **argv)
         if(cmd[0]=='r'||cmd[0]=='R'){market_reset(&m);continue;}
         if(cmd[0]=='f'||cmd[0]=='F') {
             printf("Final score $%ld = cash + bank + market cargo - debt.\n",score(&m));
+            printf("Rank: %s\n",rank_title(score(&m)));
             puts("Press Enter to start a fresh 30-day game.");
             if(!fgets(cmd,sizeof(cmd),stdin))break;
             market_reset(&m);continue;
@@ -42,9 +44,10 @@ int main(int argc,char **argv)
             rc=ask("Destination 1-4",4,&g);if(rc<0)break;if(!rc||!g)continue;
             e=travel(&m,(int)g-1);
             if(e>=0) {
-                puts(e==0?"A lost purse cost 10% of cash.":
-                    e==1?"A festival prize brought $150.":"A quiet journey.");e=1;
+                event_text(&m,e,txt);puts(txt);e=1;
             } else e=0;
+        } else if(cmd[0]=='c'||cmd[0]=='C') {
+            e=buy_coat(&m);
         } else {
             rc=ask("Amount",MONEYMAX,&n);if(rc<0)break;if(!rc||!n)continue;
             switch(cmd[0]) {
