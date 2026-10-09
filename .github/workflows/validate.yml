@@ -12,8 +12,12 @@ jobs:
           python-version: '3.12'
       - name: Compile and run portable C checks
         run: python tests/host_checks.py
+      - name: Verify invalid-index regression detects old access order
+        run: python tests/horse_regression.py
       - name: Audit exact runtime and source payload
         run: python tools/validate.py
+      - name: Audit proposed contribution bytes
+        run: python tools/validate_candidates.py
       - name: Build and verify release packages
         run: python tools/package.py
       - uses: actions/upload-artifact@v7.0.2
