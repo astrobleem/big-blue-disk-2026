@@ -6,7 +6,7 @@ DATE=(2026,10,1,12,0,0)
 def zip_bytes(path,items):
     with zipfile.ZipFile(path,'w',zipfile.ZIP_DEFLATED) as z:
         for name,b in sorted(items.items()):
-            i=zipfile.ZipInfo(name,DATE);i.compress_type=zipfile.ZIP_DEFLATED;z.writestr(i,b)
+            i=zipfile.ZipInfo(name,DATE);i.create_system=0;i.compress_type=zipfile.ZIP_DEFLATED;z.writestr(i,b)
     with zipfile.ZipFile(path) as z:assert z.testzip() is None
 def main():
     actual=validate();work=ROOT/'build';work.mkdir(exist_ok=True)
