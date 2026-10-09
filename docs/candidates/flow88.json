@@ -1,0 +1,124 @@
+{
+  "name": "flow88",
+  "base_head": "bb15a0ae6df7abf287fedefe4171fc7f7c32a06b",
+  "roster_status": "PROPOSED_ONLY; October unchanged",
+  "source": {
+    "src/flow88/BUILD.BAT": {
+      "bytes": 325,
+      "sha256": "035d208bdf96bdfc08d9124409a807b74752b135cdd09d94a199f4a1ee3f9a65"
+    },
+    "src/flow88/DOSGUARD.H": {
+      "bytes": 664,
+      "sha256": "8391e26bb677643a3ade2a5cf97eb0b796ca91f21bf54f55d174d215db32aa5c"
+    },
+    "src/flow88/FLOW88.C": {
+      "bytes": 8137,
+      "sha256": "6837dd7e9d349c8b97c39e17db8d446b1675e9b15d174a2de30f280a10d89bfe"
+    },
+    "src/flow88/FLOWCORE.H": {
+      "bytes": 10281,
+      "sha256": "3cb2feab064519cfc62b23f7030886a0200a495b51b3c9de32de4f6c492ba071"
+    },
+    "src/flow88/FLOWQA.C": {
+      "bytes": 1670,
+      "sha256": "ff102869f181bfa72cf89c2cb904ce2699292e8ebe4e946bcb02a7c0c267523a"
+    },
+    "tests/native/GUARDQA.C": {
+      "bytes": 678,
+      "sha256": "41be240d82f3f1cf96f2a12638df5c027f8e7a1ef228c21608aded9c26c3b466"
+    },
+    "tests/native/KEYRUN.C": {
+      "bytes": 2064,
+      "sha256": "a324cc18cba35293a15b2f64a1293924ec12d799c290d41a35d074e354d13175"
+    }
+  },
+  "runtime": {
+    "issues/2026-11/BBD2026/FLOW88/FLOW88.EXE": {
+      "bytes": 12309,
+      "sha256": "4ff6a706b0a4fbabd5d65aa11bf77b4c8de9acafb8916a568bcb16654cdab7d2"
+    },
+    "issues/2026-11/BBD2026/FLOW88/LICENSE.TXT": {
+      "bytes": 35823,
+      "sha256": "230184f60bae2feaf244f10a8bac053c8ff33a183bcc365b4d8b876d2b7f4809"
+    },
+    "issues/2026-11/BBD2026/FLOW88/README.TXT": {
+      "bytes": 622,
+      "sha256": "72c5e32f3dffea2cfe108b9acdd949ccb8046a12bf640c37ed94509d578b0353"
+    }
+  },
+  "evidence": {
+    "docs/candidates/flow88/COMPILE.LOG": {
+      "bytes": 1882,
+      "sha256": "e983be0bcc9a742171ced02173359dbf25a160bbb06bd8b9863a5ecbb6718a75"
+    },
+    "docs/candidates/flow88/CORE.LOG": {
+      "bytes": 31,
+      "sha256": "8c4ea3ebe36a67f25cb5ab5095da1de530f8ad846d8e2a6fe47a716c939ee3ec"
+    },
+    "docs/candidates/flow88/CTRL.LOG": {
+      "bytes": 89,
+      "sha256": "018aebe1ba7acbee658d4383ede0d8492990d43268cb8b64da1f90b4adc94947"
+    },
+    "docs/candidates/flow88/ESC.LOG": {
+      "bytes": 85,
+      "sha256": "d39aa8a43031c039b5876752de8d5b09c3cef190d47ccaee3fa1f117fefb00fc"
+    },
+    "docs/candidates/flow88/FLOW0.LOG": {
+      "bytes": 67,
+      "sha256": "991f24a8f74eb1b93ae87491416abc31083589990cc09056a29389559cef024b"
+    },
+    "docs/candidates/flow88/FLOW1.LOG": {
+      "bytes": 67,
+      "sha256": "8ba7f10efe141b3732c0d169d665aba3fa68cd06157b624e83c969e938a806a8"
+    },
+    "docs/candidates/flow88/FLOW2.LOG": {
+      "bytes": 67,
+      "sha256": "8ba7f10efe141b3732c0d169d665aba3fa68cd06157b624e83c969e938a806a8"
+    },
+    "docs/candidates/flow88/GUARD.LOG": {
+      "bytes": 53,
+      "sha256": "7039091e62128b18db3d7404895aa786b1326a14fa6e494befe5fc471a60f365"
+    }
+  },
+  "mz_allocation": {
+    "FLOW88": {
+      "file_bytes": 12309,
+      "image_allocated_bytes": 11808,
+      "minimum_extra_paragraphs": 2323,
+      "maximum_extra_paragraphs": 4096,
+      "minimum_image_plus_extra_bytes": 48976,
+      "maximum_image_plus_extra_bytes": 77344,
+      "psp_bytes": 256,
+      "environment_excluded": true,
+      "stack_bytes": 2048,
+      "video_frame_bytes": 4000,
+      "note": "EXE allocation bounds, not physical memory measurement; no far heap for these candidates."
+    }
+  },
+  "native": {
+    "result": "PASS",
+    "compiler": "MSC6 /G0 /AS /Os /W3; LINK3.64 /NOI /MAP /CP:4096",
+    "warning_free": true,
+    "repeat_build_bytes_identical": true,
+    "machine": "Tandy",
+    "cpu": "8086_prefetch",
+    "cycles_normal": 50000,
+    "cycles_fault_injection": 200000,
+    "physical_qualified": false,
+    "source_bytes_match_compiler_inputs": true,
+    "logs": {
+      "FLOW/CORE.LOG": "PASS 97383 checks, 0 failures",
+      "FLOW/CTRL.LOG": "^C\nKEYRETURN rc=0 text=1 modepage=1 cursor=1 shape=1 sound61=1 timerhook=1 breakhook=1",
+      "FLOW/ESC.LOG": "KEYRETURN rc=0 text=1 modepage=1 cursor=1 shape=1 sound61=1 timerhook=1 breakhook=1",
+      "FLOW/FLOW0.LOG": "FLOWQA frames=2 stop=0 screen=1 cursor=1 shape=1 hook=1 sound61=1",
+      "FLOW/FLOW1.LOG": "FLOWQA frames=2 stop=1 screen=1 cursor=1 shape=1 hook=1 sound61=1",
+      "FLOW/FLOW2.LOG": "FLOWQA frames=2 stop=1 screen=1 cursor=1 shape=1 hook=1 sound61=1",
+      "FLOW/GUARD.LOG": "GUARDQA PASS enhanced/standard/refusal/plain-marker"
+    },
+    "limits": [
+      "emulator cycles uncalibrated",
+      "physical speed/unusual BIOS layouts/CRT or listening not qualified",
+      "guard Windows branches injected; no hardware program run under Windows"
+    ]
+  }
+}
