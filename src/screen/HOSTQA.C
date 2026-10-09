@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <string.h>
 #include "DEMOCORE.H"
-static int checks,failures;
+static long checks;static int failures;
 #define CHECK(x) do {++checks;if(!(x)){printf("FAIL line %d: %s\n",__LINE__,#x);++failures;}}while(0)
 static unsigned char cover[0x8000];
 int main(void)
@@ -37,7 +37,7 @@ int main(void)
     for(y=0;y<SCR_H;y+=17) {
         sceneRow(y,row);
         for(i=0;i<ROW_BYTES;i++){
-            CHECK((row[i]>>4)==pixelIndex(2u*i,y));
+            CHECK(((unsigned)row[i]>>4)==pixelIndex(2u*i,y));
             CHECK((row[i]&15u)==pixelIndex(2u*i+1u,y));
         }
     }
@@ -77,12 +77,12 @@ int main(void)
             for(y=FLIP_TOP;y<FLIP_BOTTOM;y+=7)
                 for(bx=0;bx<ROW8_BYTES;bx++) {
                     unsigned char b=flipByte(bx,bar,gridByte(bx));
-                    CHECK((b>>4)==flipPixel(2u*bx,y,bar));
+                    CHECK(((unsigned)b>>4)==flipPixel(2u*bx,y,bar));
                     CHECK((b&15u)==flipPixel(2u*bx+1u,y,bar));
                 }
         for(bx=0;bx<ROW8_BYTES;bx++){
             unsigned char b=flipByte(bx,NO_BAR,gridByte(bx));
-            CHECK((b>>4)==flipPixel(2u*bx,100,NO_BAR));
+            CHECK(((unsigned)b>>4)==flipPixel(2u*bx,100,NO_BAR));
             CHECK((b&15u)==flipPixel(2u*bx+1u,100,NO_BAR));
         }
     }
@@ -100,7 +100,7 @@ int main(void)
         for(y=0;y<SCR_H;y+=13){
             splitRow(y,row);
             for(i=0;i<ROW_BYTES;i++){
-                CHECK((row[i]>>4)==splitIndex(2u*i,y));
+                CHECK(((unsigned)row[i]>>4)==splitIndex(2u*i,y));
                 CHECK((row[i]&15u)==splitIndex(2u*i+1u,y));
             }
         }
@@ -111,6 +111,14 @@ int main(void)
         CHECK(sp==SPLIT_MIN);
         CHECK(moveSplit(100,0)==100);
     }
-    printf("%s %d checks, %d failures\n",failures?"FAIL":"PASS",checks,failures);
+    for(y=0;y<SCR_H;y++) {
+        sceneRow8(y,row);for(i=0;i<ROW8_BYTES;i++) {
+            CHECK(((unsigned)row[i]>>4)==pixelIndex(4u*i,y));CHECK((row[i]&15u)==pixelIndex(4u*i+2u,y));
+        }
+        splitRow8(y,row);for(i=0;i<ROW8_BYTES;i++) {
+            CHECK(((unsigned)row[i]>>4)==splitIndex(4u*i,y));CHECK((row[i]&15u)==splitIndex(4u*i+2u,y));
+        }
+    }
+    printf("%s %ld checks, %d failures\n",failures?"FAIL":"PASS",checks,failures);
     return failures?1:0;
 }

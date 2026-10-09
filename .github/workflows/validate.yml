@@ -14,6 +14,8 @@ jobs:
         run: python tests/host_checks.py
       - name: Audit exact runtime and source payload
         run: python tools/validate.py
+      - name: Audit proposed contribution bytes
+        run: python tools/validate_candidates.py
       - name: Build and verify release packages
         run: python tools/package.py
       - uses: actions/upload-artifact@v7.0.2

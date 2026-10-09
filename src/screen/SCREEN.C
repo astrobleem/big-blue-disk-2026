@@ -19,6 +19,11 @@ static int hooked, errorCode, modeChanged;
 static unsigned char origMode;
 static void (_interrupt _far *oldBreak)(void);
 static unsigned frames, paletteLoads, retraceTimeouts;
+static unsigned qaMode, qaStop, qaFrames;
+static unsigned char origPage;
+static unsigned origCursor, origShape, origCrt, origCpu;
+static unsigned short origText[8192];
+static unsigned char qaPalette[16];
 
 static void _interrupt _far stopBreak(void) { stopped=1; }
 
@@ -27,6 +32,11 @@ static unsigned char getMode(void)
     union REGS r;
     r.h.ah=0x0f;int86(0x10,&r,&r);
     return (unsigned char)(r.h.al&0x7f);
+}
+static void readRawPages(unsigned *crt,unsigned *cpu)
+{
+    union REGS r;r.x.ax=0x0580;r.x.bx=0;int86(0x10,&r,&r);
+    *crt=r.h.bh;*cpu=r.h.bl;
 }
 static void setMode(unsigned char m)
 {
@@ -55,6 +65,16 @@ static void cleanup(void)
         outp(0x3da,0x01);
         _enable();
         setMode(origMode);
+        {
+            union REGS r;r.x.ax=0x0583;r.h.bh=(unsigned char)origCrt;r.h.bl=(unsigned char)origCpu;int86(0x10,&r,&r);
+            _fmemcpy(VRAM,origText,sizeof origText);
+        }
+        if(origMode<=3||origMode==7) {
+            union REGS r;
+            r.h.ah=5;r.h.al=origPage;int86(0x10,&r,&r);
+            r.h.ah=1;r.x.cx=origShape;int86(0x10,&r,&r);
+            r.h.ah=2;r.h.bh=origPage;r.x.dx=origCursor;int86(0x10,&r,&r);
+        }
         modeChanged=0;
     }
     if(hooked) { _dos_setvect(0x23,oldBreak); hooked=0; }
@@ -64,6 +84,8 @@ static int waitStatus(unsigned char mask,unsigned char want)
 {
     unsigned start=TICKLO,n=0;
     for(;;) {
+        if(stopped)return 1;
+        if(qaMode==4)return 1;
         if(((unsigned char)inp(0x3da)&mask)==want)return 0;
         if(!(++n&255u)&&(unsigned)(TICKLO-start)>4u)return 1;
     }
@@ -80,14 +102,29 @@ static void loadPalette(unsigned first,unsigned count,const unsigned char *v)
 {
     unsigned i;
     _disable();
-    for(i=0;i<count;i++){outp(0x3da,0x10+first+i);outp(0x3de,v[i]&15);}
+    for(i=0;i<count;i++){outp(0x3da,0x10+first+i);outp(0x3de,v[i]&15);qaPalette[first+i]=(unsigned char)(v[i]&15);}
     outp(0x3da,0x01);
     _enable();
     paletteLoads++;
 }
+static void applyKey(int key)
+{
+    if(key==27||key==3)stopped=1;
+    else if(key==' ')nextDemo=1;
+    else if(key=='t'||key=='T')toggleKey=1;
+}
 static void pollKeys(void)
 {
     int key;
+    if(qaMode) {
+        if(++qaFrames>=2) {
+            union REGS r;
+            if(qaStop==2)int86(0x23,&r,&r);
+            else if(qaStop==1)applyKey(27);
+            else nextDemo=1;
+        }
+        return;
+    }
     /* One key per frame keeps the loop responsive and scriptable. */
     if(kbhit()) {
         key=getch();
@@ -96,24 +133,29 @@ static void pollKeys(void)
             if(key==72)splitKey=-1;
             else if(key==80)splitKey=1;
         }
-        else if(key==27||key==3)stopped=1;
-        else if(key==' ')nextDemo=1;
-        else if(key=='t'||key=='T')toggleKey=1;
+        else applyKey(key);
     }
 }
 static int enterGraphics(unsigned char m)
 {
+    unsigned c,p;
+    /* We use only mode 8's single 16K frame. Its raw CPU/CRT selector
+       must be the caller's already-used odd (16K) text window. No new
+       page is selected and no 32K access or extra buffer is permitted. */
+    if(m!=8||origCrt!=origCpu||!(origCpu&1u)||origCpu>7u){errorCode=7;return 0;}
     setMode(m);modeChanged=1;
+    readRawPages(&c,&p);
+    if(c!=origCrt||p!=origCpu){errorCode=7;return 0;}
     if(getMode()!=m){ errorCode=5;return 0; }
     return 1;
 }
 static void drawScene(void)
 {
-    unsigned char row[ROW_BYTES];
+    unsigned char row[ROW8_BYTES];
     unsigned y;
     for(y=0;y<SCR_H;y++){
-        sceneRow(y,row);
-        _fmemcpy(VRAM+rowOffset(y),row,ROW_BYTES);
+        sceneRow8(y,row);
+        _fmemcpy(VRAM+rowOffset8(y),row,ROW8_BYTES);
     }
 }
 static void staticPalette(void)
@@ -127,15 +169,28 @@ static void staticPalette(void)
     loadPalette(0,16,p);
 }
 /* Demo 1: pixels are drawn once. Motion is only palette rotation. */
+static void capture(unsigned demo)
+{
+    FILE *f;char name[13];unsigned i;
+    if(!qaMode)return;
+    sprintf(name,"SC%u.RAW",demo);
+    f=fopen(name,"wb");if(!f){errorCode=9;return;}
+    for(i=0;i<16384u;i++)if(fputc(VRAM[i],f)==EOF){errorCode=9;break;}
+    if(fclose(f))errorCode=9;
+    sprintf(name,"SC%u.PAL",demo);f=fopen(name,"wb");
+    if(!f){errorCode=9;return;}
+    if(fwrite(qaPalette,1,16,f)!=16)errorCode=9;
+    if(fclose(f))errorCode=9;
+}
 static void demoCycle(void)
 {
     unsigned char water[WATER_N],flame[FLAME_N];
     unsigned i,phase=0,tick=0;
-    if(!enterGraphics(9))return;
-    syncRetrace();staticPalette();
+    if(!enterGraphics(8))return;
+    if(syncRetrace()){errorCode=6;return;}staticPalette();
     drawScene();
-    printAt(0,1,"1/3 PALETTE CYCLING: DRAWN ONCE",TEXT_IDX);
-    printAt(24,1,"SPACE next demo   ESC exit",TEXT_IDX);
+    printAt(0,1,"1/3 PALETTE CYCLE",TEXT_IDX);
+    printAt(24,1,"SPC NEXT ESC EXIT",TEXT_IDX);
     while(!stopped&&!nextDemo&&!errorCode) {
         if(syncRetrace()){ errorCode=6;break; }
         if(!(tick++&1u)) {
@@ -151,148 +206,45 @@ static void demoCycle(void)
         frames++;
         pollKeys();
     }
+    capture(1);
 }
-/* ---- Demo 2: tearing versus a flipped hidden page --------------------- */
-/* PCjr/Tandy BIOS page services, INT 10h AH=05h: AL=80h reads, AL=83h sets
-   BH=CRT page, BL=CPU page. Not described in the 1000 EX manual excerpts used
-   for this piece; behaviour here was observed in emulation only. */
-static void readPages(unsigned *crt,unsigned *cpu)
-{
-    union REGS r;
-    r.x.ax=0x0580;r.x.bx=0;int86(0x10,&r,&r);
-    *crt=r.h.bh;*cpu=r.h.bl;
-}
-static int setPages(unsigned crt,unsigned cpu)
-{
-    union REGS r;
-    unsigned c,p;
-    r.x.ax=0x0583;r.h.bh=(unsigned char)crt;r.h.bl=(unsigned char)cpu;
-    int86(0x10,&r,&r);
-    readPages(&c,&p);
-    return c==crt&&p==cpu;
-}
-/* Count scan-line blanking pulses (status bit 0) after the retrace ends. */
-static int waitScanlines(unsigned lines)
-{
-    while(lines--) {
-        if(waitStatus(1,0)||waitStatus(1,1))return 1;
-    }
-    return 0;
-}
-static unsigned char gridRow[ROW8_BYTES];
-static void drawBar(unsigned oldx,unsigned newx)
-{
-    unsigned lo,hi,y,bx,a,b;
-    unsigned char far *row;
-    a=oldx==NO_BAR?newx:oldx;b=newx;
-    lo=(a<b?a:b)>>1;
-    hi=((a>b?a:b)+BAR_W)>>1;
-    if(hi>=ROW8_BYTES)hi=ROW8_BYTES-1;
-    for(y=FLIP_TOP;y<FLIP_BOTTOM;y++) {
-        row=VRAM+rowOffset8(y);
-        for(bx=lo;bx<=hi;bx++)row[bx]=flipByte(bx,newx,gridRow[bx]);
-    }
-}
-static void drawBackground(unsigned page)
-{
-    unsigned y,bx;
-    unsigned char far *row;
-    _fmemset(VRAM,0,16384u);
-    for(y=FLIP_TOP;y<FLIP_BOTTOM;y++) {
-        row=VRAM+rowOffset8(y);
-        for(bx=0;bx<ROW8_BYTES;bx++)row[bx]=gridRow[bx];
-    }
-    (void)page;
-}
-static void marker(int clean)
-{
-    unsigned y,bx;
-    unsigned char far *row;
-    unsigned char v=(unsigned char)(((clean?MARK_CLEAN:MARK_TEAR)<<4)|(clean?MARK_CLEAN:MARK_TEAR));
-    for(y=8;y<14;y++) {
-        row=VRAM+rowOffset8(y);
-        for(bx=66;bx<78;bx++)row[bx]=v;
-    }
-}
-/* Label and marker go on both pages, once per mode change. */
-static int showMode(int clean,unsigned shown,unsigned hidden)
-{
-    unsigned i,pg;
-    for(i=0;i<2;i++) {
-        pg=i?hidden:shown;
-        if(!setPages(shown,pg))return 0;
-        marker(clean);
-        printAt(0,0,clean?"CLEAN: HIDDEN PAGE":"TEAR: BEAM RACE    ",TEXT_IDX);
-    }
-    return setPages(shown,clean?hidden:shown);
-}
+/* Mode 8 needs two demonstrably reserved 16K buffers for page flipping.
+   Matching BIOS selectors is not an ownership proof. Until an EX/DOS
+   reservation contract is qualified, refuse this experiment before any
+   mode, palette, selector or VRAM write. Original proposal is preserved
+   in Claude's branch/commit; no unsafe opt-in build flag is offered. */
 static void demoFlip(void)
 {
-    unsigned p9,p8,dummy,shown,hidden,frame=0,i,newx,lastx[2],cleanMode=0,hold=0,labelled=2;
-    unsigned char pal[16];
-    if(!enterGraphics(9))return;
-    readPages(&p9,&dummy);
-    if(!enterGraphics(8))return;
-    readPages(&p8,&dummy);
-    /* Only flip inside the 32K pair the BIOS itself uses for 320x200x16. */
-    if((p8>>1)!=(p9>>1)||(p9&1u)){ errorCode=7;return; }
-    shown=p8;hidden=p8^1u;
-    for(i=0;i<ROW8_BYTES;i++)gridRow[i]=gridByte(i);
-    for(i=0;i<16;i++)pal[i]=0;
-    pal[BAR_COLOR]=15;pal[GRID_COLOR]=8;pal[MARK_TEAR]=4;pal[MARK_CLEAN]=10;pal[15]=15;
-    syncRetrace();loadPalette(0,16,pal);
-    for(i=0;i<2;i++) {
-        unsigned pg=i?hidden:shown;
-        if(!setPages(shown,pg)){ errorCode=8;return; }
-        drawBackground(pg);
-        printAt(24,0,"SPC NEXT T MODE ESC",TEXT_IDX);
-        lastx[pg&1u]=NO_BAR;
-    }
-    while(!stopped&&!nextDemo&&!errorCode) {
-        if(toggleKey){ toggleKey=0;cleanMode=!cleanMode;hold=1;frame=0; }
-        else if(!hold&&frame>=240u){ cleanMode=!cleanMode;frame=0; }
-        if(labelled!=cleanMode) {
-            if(!showMode(cleanMode,shown,hidden)){ errorCode=8;break; }
-            labelled=cleanMode;
-        }
-        newx=barPos(frame);
-        if(cleanMode) {
-            if(!setPages(shown,hidden)){ errorCode=8;break; }
-            drawBar(lastx[hidden&1u],newx);lastx[hidden&1u]=newx;
-            if(syncRetrace()){ errorCode=6;break; }
-            if(!setPages(hidden,hidden)){ errorCode=8;break; }
-            i=shown;shown=hidden;hidden=i;
-        } else {
-            if(!setPages(shown,shown)){ errorCode=8;break; }
-            if(syncRetrace()||waitScanlines(90)){ errorCode=6;break; }
-            drawBar(lastx[shown&1u],newx);lastx[shown&1u]=newx;
-        }
-        frame++;frames++;
-        pollKeys();
-    }
+    errorCode=7;
 }
 /* ---- Demo 3: change palette entries mid-frame -------------------------- */
+/* Bounded scan-line counting is shared by the retained raster experiment. */
+static int waitScanlines(unsigned lines)
+{
+    while(lines--)if(waitStatus(1,0)||waitStatus(1,1))return 1;
+    return 0;
+}
 static void splitLabel(unsigned split)
 {
     char buf[24];
-    sprintf(buf,"3/3 SPLIT LINE %3u  ",split);
+    sprintf(buf,"3/3 SPLIT %3u",split);
     printAt(0,0,buf,TEXT_IDX);
 }
 static void demoSplit(void)
 {
-    unsigned char row[ROW_BYTES],pal[16];
+    unsigned char row[ROW8_BYTES],pal[16];
     unsigned y,i,split=100;
-    if(!enterGraphics(9))return;
+    if(!enterGraphics(8))return;
     for(i=0;i<16;i++)pal[i]=0;
     for(i=0;i<SPLIT_N;i++)pal[1+i]=splitTop[i];
     pal[TEXT_IDX]=15;
-    syncRetrace();loadPalette(0,16,pal);
+    if(syncRetrace()){errorCode=6;return;}loadPalette(0,16,pal);
     for(y=0;y<SCR_H;y++){
-        splitRow(y,row);
-        _fmemcpy(VRAM+rowOffset(y),row,ROW_BYTES);
+        splitRow8(y,row);
+        _fmemcpy(VRAM+rowOffset8(y),row,ROW8_BYTES);
     }
     splitLabel(split);
-    printAt(24,0,"UP/DN MOVE SPC NEXT ESC",TEXT_IDX);
+    printAt(24,0,"UP/DN SPC NEXT ESC",TEXT_IDX);
     while(!stopped&&!nextDemo&&!errorCode) {
         if(splitKey){ split=moveSplit(split,splitKey);splitKey=0;splitLabel(split); }
         if(syncRetrace()){ errorCode=6;break; }
@@ -302,17 +254,21 @@ static void demoSplit(void)
         frames++;
         pollKeys();
     }
+    capture(3);
 }
 int main(int argc,char **argv)
 {
-    unsigned first=1,last=LAST_DEMO,d,flags;
-    if(argc==2&&argv[1][0]>='1'&&argv[1][0]<='0'+LAST_DEMO&&!argv[1][1])
+    unsigned first=1,last=LAST_DEMO,d,flags,i,before61;int textOK=1,cursorOK=1,hookOK;
+    if(argc==4&&!strcmp(argv[1],"/qa")&&argv[2][0]>='1'&&argv[2][0]<='4'&&!argv[2][1]&&argv[3][0]>='0'&&argv[3][0]<='2'&&!argv[3][1]) {
+        qaMode=argv[2][0]-'0';qaStop=argv[3][0]-'0';
+        first=last=qaMode==4?1:qaMode;
+    }
+    else if(argc==2&&argv[1][0]>='1' &&argv[1][0]<='0'+LAST_DEMO&&!argv[1][1])
         first=last=argv[1][0]-'0';
     else if(argc!=1) {
         puts("Usage: SCREEN [1|2|3]; default runs all. Space next, Escape exits.");
         return 2;
     }
-    puts("Tandy 1000 graphics demos. Plain DOS only. Space next, Esc exits.");
     _asm pushf
     _asm pop flags
     if(!(flags&0x200)) {
@@ -322,17 +278,39 @@ int main(int argc,char **argv)
         puts("REFUSED: needs plain DOS on a Tandy 1000 (not Windows).");return 3;
     }
     origMode=getMode();
-    atexit(cleanup);
+    if(origMode!=3) {puts("REFUSED: start in 80-column DOS text mode 3.");return 3;}
+    {
+        union REGS r;
+        r.h.ah=0x0f;int86(0x10,&r,&r);origPage=r.h.bh;
+        if(r.h.ah!=80) {puts("REFUSED: 80-column text required.");return 3;}
+        r.h.ah=3;r.h.bh=origPage;int86(0x10,&r,&r);
+        origCursor=r.x.dx;origShape=r.x.cx;
+        if(origPage>3) {puts("REFUSED: unsupported text page.");return 3;}
+        readRawPages(&origCrt,&origCpu);
+        if(origCrt!=origCpu||!(origCpu&1u)||origCpu>7u) {puts("REFUSED: no known 16K caller video window.");return 3;}
+        _fmemcpy(origText,VRAM,sizeof origText);
+    }
+    if(atexit(cleanup)) {puts("REFUSED: cannot register cleanup.");return 3;}
+    before61=(unsigned)inp(0x61)&0xcfu;
     oldBreak=_dos_getvect(0x23);_dos_setvect(0x23,stopBreak);hooked=1;
     for(d=first;d<=last&&!stopped&&!errorCode;d++) {
         nextDemo=0;
         if(d==1)demoCycle();
-        else if(d==2)demoFlip();
+        else if(d==2) {if(first==last)demoFlip();else continue;}
         else if(d==3)demoSplit();
     }
     cleanup();
-    if(errorCode==7)puts("REFUSED demo 2: BIOS video pages are not the expected 32K pair.");
-    printf("DONE stop=%d error=%d frames=%u palette_loads=%u "
+    if(qaMode) {
+        union REGS r;
+        for(i=0;i<8192;i++)if(((unsigned short far *)0xb8000000UL)[i]!=origText[i])textOK=0;
+        r.h.ah=3;r.h.bh=origPage;int86(0x10,&r,&r);
+        cursorOK=r.x.cx==origShape&&r.x.dx==origCursor;
+        hookOK=_dos_getvect(0x23)==oldBreak;
+        printf("SCREENQA text=%d cursor=%d hook=%d sound61=%d\n",textOK,cursorOK,hookOK,((unsigned)inp(0x61)&0xcfu)==before61);
+        if(!textOK||!cursorOK||!hookOK||((unsigned)inp(0x61)&0xcfu)!=before61)errorCode=10;
+    }
+    if(errorCode==7)puts("REFUSED: extra buffers or changed BIOS window are not qualified.");
+    if(qaMode)printf("DONE stop=%d error=%d frames=%u palette_loads=%u "
         "retrace_timeouts=%u mode_restored=%u\n",
         stopped,errorCode,frames,paletteLoads,retraceTimeouts,
         getMode()==origMode);

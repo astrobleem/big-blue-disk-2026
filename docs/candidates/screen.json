@@ -1,0 +1,194 @@
+{
+  "name": "screen",
+  "base_head": "3e1ce41aae1f9943805ef1adce3bcceda5fa0b59",
+  "roster_status": "PROPOSED_ONLY; October unchanged",
+  "source": {
+    "src/screen/BUILD.BAT": {
+      "bytes": 321,
+      "sha256": "fdbc13f6d206b11b09ebfe3e6088d92726eb0144f279716def3f5488b7758b32"
+    },
+    "src/screen/DEMOCORE.H": {
+      "bytes": 6156,
+      "sha256": "d99aa5f663f744fa2064059bf0bd9bd0d347874e60e4444c2a35187cd47e5200"
+    },
+    "src/screen/DOSGUARD.H": {
+      "bytes": 664,
+      "sha256": "8391e26bb677643a3ade2a5cf97eb0b796ca91f21bf54f55d174d215db32aa5c"
+    },
+    "src/screen/HOSTQA.C": {
+      "bytes": 5309,
+      "sha256": "d133c198f9cd91f69992b5d61f9154ad973c59bfc59a8df21ff47b98273ec2ef"
+    },
+    "src/screen/REFS.TXT": {
+      "bytes": 2056,
+      "sha256": "4f0d98016571d249452e80467435b07440e57374461eddfa48dd123413229818"
+    },
+    "src/screen/SCREEN.C": {
+      "bytes": 11618,
+      "sha256": "0fc355c275c2265537e6e4add8777f63fcee9ca7762a67eb355c7f159a665e9f"
+    },
+    "tests/native/GUARDQA.C": {
+      "bytes": 678,
+      "sha256": "41be240d82f3f1cf96f2a12638df5c027f8e7a1ef228c21608aded9c26c3b466"
+    },
+    "tests/native/KEYRUN.C": {
+      "bytes": 2064,
+      "sha256": "a324cc18cba35293a15b2f64a1293924ec12d799c290d41a35d074e354d13175"
+    }
+  },
+  "runtime": {
+    "issues/2026-11/BBD2026/SCREEN/ARTICLE.TXT": {
+      "bytes": 4133,
+      "sha256": "603914d2a70cf52819b36775546cdc953b6b86d2ad4888a9b103baa11f9aa309"
+    },
+    "issues/2026-11/BBD2026/SCREEN/LICENSE.TXT": {
+      "bytes": 35823,
+      "sha256": "230184f60bae2feaf244f10a8bac053c8ff33a183bcc365b4d8b876d2b7f4809"
+    },
+    "issues/2026-11/BBD2026/SCREEN/README.TXT": {
+      "bytes": 1142,
+      "sha256": "414047a51351d16cddd6676dc6e8101704c2fc2aef1097b65c13c201ad51793f"
+    },
+    "issues/2026-11/BBD2026/SCREEN/REFS.TXT": {
+      "bytes": 2056,
+      "sha256": "4f0d98016571d249452e80467435b07440e57374461eddfa48dd123413229818"
+    },
+    "issues/2026-11/BBD2026/SCREEN/SCREEN.EXE": {
+      "bytes": 13401,
+      "sha256": "d52236b61a9efddc400cd63383fbd3a7bd215ac196cd19a87c00bd6ca854210b"
+    }
+  },
+  "evidence": {
+    "docs/candidates/screen/C1.LOG": {
+      "bytes": 89,
+      "sha256": "018aebe1ba7acbee658d4383ede0d8492990d43268cb8b64da1f90b4adc94947"
+    },
+    "docs/candidates/screen/C3.LOG": {
+      "bytes": 89,
+      "sha256": "018aebe1ba7acbee658d4383ede0d8492990d43268cb8b64da1f90b4adc94947"
+    },
+    "docs/candidates/screen/COMPILE.LOG": {
+      "bytes": 1882,
+      "sha256": "e983be0bcc9a742171ced02173359dbf25a160bbb06bd8b9863a5ecbb6718a75"
+    },
+    "docs/candidates/screen/CORE.LOG": {
+      "bytes": 32,
+      "sha256": "9bc9545bcb47d2d067e600a6d6a065769384b46e2e07565945fb4188d624e6a9"
+    },
+    "docs/candidates/screen/E1.LOG": {
+      "bytes": 85,
+      "sha256": "d39aa8a43031c039b5876752de8d5b09c3cef190d47ccaee3fa1f117fefb00fc"
+    },
+    "docs/candidates/screen/E3.LOG": {
+      "bytes": 85,
+      "sha256": "d39aa8a43031c039b5876752de8d5b09c3cef190d47ccaee3fa1f117fefb00fc"
+    },
+    "docs/candidates/screen/REFUSE.LOG": {
+      "bytes": 190,
+      "sha256": "d676ff19d09b7b324772921ea76924e1f4f6ba27043e1955f6949f93626112fc"
+    },
+    "docs/candidates/screen/S10.LOG": {
+      "bytes": 124,
+      "sha256": "de800b20b35ac753b90fafff720844d3db35eca9b858008704a44590030d91eb"
+    },
+    "docs/candidates/screen/S11.LOG": {
+      "bytes": 124,
+      "sha256": "33b4ace0239604ab5c867907e683c3b8e6ff6738fcc03ca940870691d0048c01"
+    },
+    "docs/candidates/screen/S12.LOG": {
+      "bytes": 124,
+      "sha256": "33b4ace0239604ab5c867907e683c3b8e6ff6738fcc03ca940870691d0048c01"
+    },
+    "docs/candidates/screen/S30.LOG": {
+      "bytes": 124,
+      "sha256": "26276c5ad7a41cf2bbc98fbcb22dbf90b1bab4b767e830853f9f9b448400120f"
+    },
+    "docs/candidates/screen/S31.LOG": {
+      "bytes": 124,
+      "sha256": "61b5faad02a35b4989d823a514f395e98a8e46b8af816a08b1a0cb598a0f3739"
+    },
+    "docs/candidates/screen/S32.LOG": {
+      "bytes": 124,
+      "sha256": "61b5faad02a35b4989d823a514f395e98a8e46b8af816a08b1a0cb598a0f3739"
+    },
+    "docs/candidates/screen/TIMEOUT.LOG": {
+      "bytes": 124,
+      "sha256": "87ef069de3483780cc37554d55303cbc04ec2df1d32913ac8558634d6a37a5b2"
+    },
+    "assets/screen/evidence/EVIDENCE.TXT": {
+      "bytes": 721,
+      "sha256": "2fb6db470bfcb799cac1ce4d5cd3529498655779c1fbb37d63e32ad1108cc92e"
+    },
+    "assets/screen/evidence/SC1.PAL": {
+      "bytes": 16,
+      "sha256": "8dd9de012d0ebd9fa576cea47b63fb17e737b88dc053409358cfc02cac134eca"
+    },
+    "assets/screen/evidence/SC1.RAW": {
+      "bytes": 16384,
+      "sha256": "916c37d5945238b125a8670e5201a0b67371f83c6701b38fb22c6ada563186ba"
+    },
+    "assets/screen/evidence/SC3.PAL": {
+      "bytes": 16,
+      "sha256": "18da8036baccb8be0b14cf7cae338819bca7f7674942e00ac8bc701c7ee7a1bf"
+    },
+    "assets/screen/evidence/SC3.RAW": {
+      "bytes": 16384,
+      "sha256": "51e4a337299011e942f12820b65797215d7a896b8b4b6387856aef463e8d34ff"
+    },
+    "assets/screen/evidence/SCREEN1-QA.PNG": {
+      "bytes": 2547,
+      "sha256": "d7b197d447f85db7f0867a2ddfc189ebcb1c64af44b5d2723c16f37610628c75"
+    },
+    "assets/screen/evidence/SCREEN3-PIXELS.PNG": {
+      "bytes": 1846,
+      "sha256": "670b3105a47266fcbd32ad2a793ad68618fd800f45c4407cf267f89578629f95"
+    }
+  },
+  "mz_allocation": {
+    "SCREEN": {
+      "file_bytes": 13401,
+      "image_allocated_bytes": 12896,
+      "minimum_extra_paragraphs": 1193,
+      "maximum_extra_paragraphs": 4096,
+      "minimum_image_plus_extra_bytes": 31984,
+      "maximum_image_plus_extra_bytes": 78432,
+      "psp_bytes": 256,
+      "environment_excluded": true,
+      "stack_bytes": 2048,
+      "video_frame_bytes": 16384,
+      "note": "EXE allocation bounds, not physical memory measurement; no far heap for these candidates."
+    }
+  },
+  "native": {
+    "result": "PASS",
+    "compiler": "MSC6 /G0 /AS /Os /W3; LINK3.64 /NOI /MAP /CP:4096",
+    "warning_free": true,
+    "repeat_build_bytes_identical": true,
+    "machine": "Tandy",
+    "cpu": "8086_prefetch",
+    "cycles_normal": 50000,
+    "cycles_fault_injection": 200000,
+    "physical_qualified": false,
+    "source_bytes_match_compiler_inputs": true,
+    "logs": {
+      "SCREEN/C1.LOG": "^C\nKEYRETURN rc=0 text=1 modepage=1 cursor=1 shape=1 sound61=1 timerhook=1 breakhook=1",
+      "SCREEN/C3.LOG": "^C\nKEYRETURN rc=0 text=1 modepage=1 cursor=1 shape=1 sound61=1 timerhook=1 breakhook=1",
+      "SCREEN/CORE.LOG": "PASS 970892 checks, 0 failures",
+      "SCREEN/E1.LOG": "KEYRETURN rc=0 text=1 modepage=1 cursor=1 shape=1 sound61=1 timerhook=1 breakhook=1",
+      "SCREEN/E3.LOG": "KEYRETURN rc=0 text=1 modepage=1 cursor=1 shape=1 sound61=1 timerhook=1 breakhook=1",
+      "SCREEN/REFUSE.LOG": "SCREENQA text=1 cursor=1 hook=1 sound61=1\nREFUSED: extra buffers or changed BIOS window are not qualified.\nDONE stop=0 error=7 frames=0 palette_loads=0 retrace_timeouts=0 mode_restored=1",
+      "SCREEN/S10.LOG": "SCREENQA text=1 cursor=1 hook=1 sound61=1\nDONE stop=0 error=0 frames=2 palette_loads=3 retrace_timeouts=0 mode_restored=1",
+      "SCREEN/S11.LOG": "SCREENQA text=1 cursor=1 hook=1 sound61=1\nDONE stop=1 error=0 frames=2 palette_loads=3 retrace_timeouts=0 mode_restored=1",
+      "SCREEN/S12.LOG": "SCREENQA text=1 cursor=1 hook=1 sound61=1\nDONE stop=1 error=0 frames=2 palette_loads=3 retrace_timeouts=0 mode_restored=1",
+      "SCREEN/S30.LOG": "SCREENQA text=1 cursor=1 hook=1 sound61=1\nDONE stop=0 error=0 frames=2 palette_loads=5 retrace_timeouts=0 mode_restored=1",
+      "SCREEN/S31.LOG": "SCREENQA text=1 cursor=1 hook=1 sound61=1\nDONE stop=1 error=0 frames=2 palette_loads=5 retrace_timeouts=0 mode_restored=1",
+      "SCREEN/S32.LOG": "SCREENQA text=1 cursor=1 hook=1 sound61=1\nDONE stop=1 error=0 frames=2 palette_loads=5 retrace_timeouts=0 mode_restored=1",
+      "SCREEN/TIMEOUT.LOG": "SCREENQA text=1 cursor=1 hook=1 sound61=1\nDONE stop=0 error=6 frames=0 palette_loads=0 retrace_timeouts=1 mode_restored=1"
+    },
+    "limits": [
+      "emulator cycles uncalibrated",
+      "physical speed/unusual BIOS layouts/CRT or listening not qualified",
+      "guard Windows branches injected; no hardware program run under Windows"
+    ]
+  }
+}

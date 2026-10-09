@@ -79,12 +79,19 @@ static void sceneRow(unsigned y,unsigned char *row)
         row[i]=(unsigned char)((pixelIndex(2u*i,y)<<4)|pixelIndex(2u*i+1u,y));
 }
 
+/* Downsample the original 320-wide teaching scene into one 160-wide
+   mode 8 frame. No 32K framebuffer or extra frame is needed. */
+#define ROW8_BYTES 80u
+static unsigned rowOffset8(unsigned y)
+{ return (unsigned)((y&1u)*BANK_STRIDE+(y>>1)*ROW8_BYTES); }
+static void sceneRow8(unsigned y,unsigned char *row)
+{ unsigned i;for(i=0;i<ROW8_BYTES;i++)row[i]=(unsigned char)((pixelIndex(4u*i,y)<<4)|pixelIndex(4u*i+2u,y)); }
+
 /* ---- Demo 2: page flipping in 160x200x16 --------------------------------
  * 160x200 uses two interleaved banks of 8000 bytes, 80 bytes per scan line:
  * scan line y starts at (y&1)*0x2000 + (y>>1)*80. Palette plan: 0 black,
  * 1 bar, 2 grid, 3 tearing marker, 4 clean marker, 15 text.
  */
-#define ROW8_BYTES   80u
 #define FLIP_TOP     24u
 #define FLIP_BOTTOM  176u
 #define BAR_W        12u
@@ -93,11 +100,6 @@ static void sceneRow(unsigned y,unsigned char *row)
 #define MARK_TEAR    3u
 #define MARK_CLEAN   4u
 #define NO_BAR       0xffffu
-
-static unsigned rowOffset8(unsigned y)
-{
-    return (unsigned)((y&1u)*BANK_STRIDE + (y>>1)*ROW8_BYTES);
-}
 
 /* Reference definition of one pixel; flipByte() must agree with it. */
 static unsigned flipPixel(unsigned x,unsigned y,unsigned barx)
@@ -155,6 +157,8 @@ static void splitRow(unsigned y,unsigned char *row)
     for(i=0;i<ROW_BYTES;i++)
         row[i]=(unsigned char)((splitIndex(2u*i,y)<<4)|splitIndex(2u*i+1u,y));
 }
+static void splitRow8(unsigned y,unsigned char *row)
+{ unsigned i;for(i=0;i<ROW8_BYTES;i++)row[i]=(unsigned char)((splitIndex(4u*i,y)<<4)|splitIndex(4u*i+2u,y)); }
 static unsigned moveSplit(unsigned split,int dir)
 {
     if(dir<0)return split>SPLIT_MIN+SPLIT_STEP?split-SPLIT_STEP:SPLIT_MIN;

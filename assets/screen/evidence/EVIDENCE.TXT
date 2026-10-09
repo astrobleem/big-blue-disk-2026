@@ -1,6 +1,10 @@
-Emulator captures only. DOSBox-X, Tandy machine, cropped to the emulated
-display and shown at 2x. Not hardware captures.
-SCREEN1A/1B  demo 1, two frames: same pixels, different palette colours.
-SCREEN2T     demo 2 TEAR: the bar is split where the redraw crossed the beam.
-SCREEN2C     demo 2 CLEAN: hidden page flipped in retrace; the bar is whole.
-SCREEN3A/3B  demo 3: split at line 100, then after 8 Up presses at line 68.
+Corrected exact-binary native VRAM samples, DOSBox-X Tandy/8086_prefetch.
+SC1.RAW and SC3.RAW: actual16384-byte mode08h CPU-window captures.
+SC1.PAL and SC3.PAL: program-side palette-write trace; not readback.
+SCREEN1-QA.PNG applies the recorded cycle palette to the native pixels.
+SCREEN3-PIXELS.PNG uses identity colors to show pixel-index layout only;
+it does NOT show the raster split, glitch row, retrace timing or CRT hues.
+Decoded at160x200 and horizontally doubled to320x200, nearest neighbor.
+Captures came from the same fresh repeat-build binary hashed in the manifest.
+The old TEAR/CLEAN images were removed. The flip path is now disabled.
+No physical Tandy/WEGA capture or high-color claim is made.

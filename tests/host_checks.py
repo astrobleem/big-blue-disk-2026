@@ -12,7 +12,7 @@ def main():
         exe=out/(name+('.exe' if args.watcom else ''))
         sources=[str(ROOT/'src'/name/f) for f in files]
         if args.watcom:cmd=[cc,'-q','-bt=nt','-l=nt','-fe='+str(exe)]+sources
-        else:cmd=[cc,'-std=c89','-O2','-o',str(exe)]+sources
+        else:cmd=[cc,'-x','c','-std=c89','-O2','-o',str(exe)]+sources
         if name=='fillers':cmd.insert(1,'-dHOST' if args.watcom else '-DHOST')
         subprocess.run(cmd,cwd=out,check=True)
         result=subprocess.run([str(exe)],cwd=out,check=True,text=True,capture_output=True)
