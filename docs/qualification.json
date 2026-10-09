@@ -1,0 +1,14 @@
+{
+  "result": "PASS",
+  "seconds": 25.3,
+  "cycles": 50000,
+  "cpu": "8086",
+  "machine": "Tandy",
+  "image_sha256": "15431cf577dc34f7b25adf716a09966e06283b97ef27cd2329882a30c089e746",
+  "menu_selections_checked": 6,
+  "gameplay_demo": "ticks=2 rounds=60 level=3 finished=1 state=2984 mode=3 restored=3",
+  "native_unit": "PASS 65620 checks; state 2984 bytes; 3 key-to-stairs paths; bounded fire",
+  "physical_speed_qualified": false,
+  "source_qualification": "completed original ISSUE02 native test; no new emulator run for publication",
+  "public_issue": "2026-10 / Issue 1"
+}

@@ -1,0 +1,50 @@
+KROZ: GRENADES -- ORIGINAL THREE-LEVEL SLICE
+
+Explore three small dungeons. Collect + gems, k keys and w whip pickups;
+open D doors and descend at >>. No mandatory treasure tally or Staff quest.
+Monsters, terrain and route choices remain the focus. This is original code
+and maps inspired by Kroz, with additive grenades; not an exact recreation.
+
+ARROWS or NUMPAD 1-4,6-9: move (including diagonals).
+I/J/K/M move up/left/right/down; U/O/comma supply NW/NE/SE alternatives.
+W: nearby whip. SPACE: grenade. R: free checkpoint retry. N: skip a level.
+ESC: return to the magazine. At the final descent, R explores again.
+W is never up. N is skip rather than the old PCjr southwest alternative.
+
+WHIP: one charge sweeps the eight adjacent tiles, clears nearby monsters,
+rubble and forest, and extinguishes burning forest. Permanent walls, water,
+doors and shielded diagonal corners stay intact. A brief white ~~ sweep shows
+the action. Start with20 charges; each w pickup gives5. Holding W can repeat
+after a short cooldown; queued repeats cannot spend multiple charges at once.
+The radius, cost and guaranteed terrain break are documented new choices;
+the supplied historical instructions do not establish their exact values.
+
+GEMS: start with40. Each + pickup gives5. A monster disappears on contact
+and takes up to2 gems. If already at0, contact gives a free checkpoint retry.
+These generous values and automatic retry differ from historical game-over.
+R restores this level's entry supplies and map; no lives limit. New levels
+carry inventory, topping gems/whips up to40/20 if needed. No full save/load yet.
+
+KEYS: stepping onto D spends one key. Neither weapon breaks locked doors.
+Every authored level has a reachable key and route to its descending stairs.
+
+GRENADES: unlimited, up to4 active; aim with movement. Travel up to4 tiles,
+then explode after12 simulation steps. Barrels [] chain; rubble breaks;
+forest burns briefly. Blasts cannot hurt you or destroy loot, keys, whip
+pickups, portals or stairs, and cannot break permanent walls/water/doors.
+Barrels push cardinally but cannot cover a pickup or portal.
+
+WORLD: ~ rivers block travel; use authored crossings. Purple O pads pair
+within a level. Step off the arrival pad before using it again. Fire ^ blocks
+burning forest briefly, then leaves floor. It spreads only through forest,
+with at most2 propagation generations; water/floor/walls stop it. Whip it
+from nearby or wait. Loot and authored floor routes never burn. No fluid or
+fortress simulation, fire contact damage, lava, pits or hidden lethal traps.
+
+LEVELS: Entry Dungeon (8 slow monsters), River Passage (10), Ember Caverns
+(12). Grenade clusters give crowd/terrain opportunities, not extra mandatory
+combat gates. The last stairs finish this short original descent.
+
+LIMITS: this is a small faithful-style subset, not the historic30-level game.
+Manual keyboard feel and physical EX timing/memory still need acceptance.
+The reference audit and exact source/qualification live in the companion ZIP.

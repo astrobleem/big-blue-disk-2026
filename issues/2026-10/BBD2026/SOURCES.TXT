@@ -1,0 +1,6 @@
+Complete corresponding source and authoring assets: SOURCE26.ZIP
+from the October 2026 issue release, alongside BBD2610.IMG/BBD2610.ZIP.
+Browsable source: https://github.com/astrobleem/big-blue-disk-2026
+The source archive is off-disk to keep the issue 720KB-friendly.
+GPLv3 applies; retain credits and component license notices.
+No compiler binaries, historic programs or OS files are redistributed.

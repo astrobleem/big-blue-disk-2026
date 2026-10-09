@@ -1,0 +1,104 @@
+CAMERA OBSCURA: DIAGRAM AND SOURCE NOTES
+
+DIAGRAM DESIGN
+
+Delivered CAMERA_320.PNG is an original 320 x 200 indexed PNG with a 4-bit
+palette, using black and white only. It is designed for a Tandy-friendly
+16-color display. CAMERA_640_MONO.PNG is an optional 640 x 200 one-bit
+version, horizontally doubled with nearest-neighbor sampling. Both were
+visually inspected at their native dimensions. The source script is
+draw_camera_diagram.py.
+
+An upright arrow represents the object. Its inverted image lies on the rear
+screen. The opaque front wall has a gap centered at (155, 100). The object
+endpoints are (36, 63) and (36, 137); the corresponding image points are
+(274, 137) and (274, 63). Two sample rays cross exactly at the pinhole and
+continue straight. Small chevrons show travel from left to right. No lens or
+mirror is shown.
+
+Labels identify OBJECT, DARK BOX, WALL, PINHOLE, SCREEN, UPRIGHT, and
+INVERTED. All text uses hard-edged bitmap lettering. The PINHOLE leader is a
+short horizontal line; the two long diagonal lines are light rays.
+
+Caption: Light from the top reaches the bottom. Light from the bottom
+reaches the top. The rays continue straight through the pinhole.
+
+Only two sample rays are shown. The actual image is formed by light from
+points all over the scene.
+
+SOURCES CHECKED OCTOBER 7, 2026
+
+1. University of Kentucky, The Physics of Light: Images.
+
+https://www.pa.uky.edu/sciworks/courses/light/image4a.htm
+
+Supports straight-ray geometry, inversion, a lensless camera, and the
+brightness/sharpness tradeoff. Used for the explanation and diagram.
+
+2. Science World, Camera Obscura.
+
+https://www.scienceworld.ca/resource/camera-obscura/
+
+Supports a closed cardboard box, foil aperture, clean small pinhole, sealed
+seams, and a bright external scene. Their white interior screen differs from
+our translucent rear screen.
+
+3. University of Wisconsin-Madison, Make a Pinhole Camera.
+
+https://wonders.physics.wisc.edu/make-a-pinhole-camera/
+
+Supports a translucent paper screen, shielding of the viewing side, and
+observing an inverted live image. Our shoebox layout is an original
+adaptation. The article deliberately excludes solar viewing.
+
+4. MIT, Foundations of Computer Vision, Lenses.
+
+https://visionbook.mit.edu/lenses.html
+
+Supports why a large aperture admits overlapping bundles, while a small
+aperture gives a dim image. The aperture sorts directions; it does not focus
+light by bending rays like a lens.
+
+5. J. Paul Getty Museum, Devices of Wonder, Dark Chambers, page 6.
+
+https://www.getty.edu/art/exhibitions/devices/flash/pdf/p_themes_in_depth.pdf
+
+Supports room-size and portable camera obscuras, use as drawing aids and
+entertainment, and moving color images before photography. No disputed
+inventor or priority claims are made in the article.
+
+6. Rego et al., Deep Camera Obscura, author research paper.
+
+https://arxiv.org/abs/2108.05563
+
+Supports optical diffraction and low light throughput as limitations of
+lensless pinhole imaging.
+
+EDITORIAL CHECKS
+
+Article: 844 words including title and section headings. Original prose.
+ASCII only, hard-wrapped at 76 columns, with CRLF line endings. No
+photographic recording, lens, chemicals, mains electricity, or direct solar
+observation is required.
+
+Safety: adult sharp-tool caution; keep the Sun out of the field and never
+aim at it or look through the pinhole at it. The viewing cloth has breathing
+space and must not cover the front aperture. No hot lamps or flames are
+proposed.
+
+Viewing geometry: subject faces the foil end; viewer stays behind the
+opposite translucent screen and looks at the screen itself. This avoids the
+common construction error of using opaque paper while trying to view it from
+behind. A cloth shields the viewer, screen, and intervening space from
+ambient light. This is a source-grounded design, not a claim of physical
+prototype testing.
+
+Scope of historical claims is deliberately modest. The article discusses
+inversion vertically, avoiding confusing left/right descriptions that depend
+on which side of the screen is viewed. The pinhole's suggested
+half-millimeter size is a practical starting point, not an asserted
+universal optimum.
+
+Revision: The opening now introduces the series premise, defines a camera
+obscura before the experiment, and explains why it is the first installment.
+The science, experiment, and diagrams are unchanged.

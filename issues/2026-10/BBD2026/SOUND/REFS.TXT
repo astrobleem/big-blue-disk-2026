@@ -1,0 +1,35 @@
+Primary references and evidence scope
+
+1. Tandy Corporation, Tandy 1000 EX Technical Reference Manual, 1986,
+   Cat. No.25-1510; Main Logic Board, printed p.32, "Sound".
+   Primary manufacturer's manual, archived at:
+   https://archive.org/details/tandy1000extechnicalreferencemanual
+   Read the item's FULL TEXT; the Sound paragraph immediately precedes
+   printed32 and Figure10 on printed33. It describes four generators
+   summed with the external8253 counter2 input; that input has
+   programmable frequency and fixed amplitude. Figure11 is printed34.
+   Independently verified through the archive's primary-manual OCR on
+   2026-10-07. No local manual download or copied manual pages included.
+   Audio Out selection uses SNDCNTL0/1; the article does not promise
+   identical speaker/jack/mute routing across other Tandy models.
+
+2. Texas Instruments, SN76489AN Digital Complex Sound Generator manual.
+   Primary manufacturer's manual, mirrored at:
+   https://map.grauw.nl/resources/sound/texas_instruments_sn76489an.pdf
+   Web access resolves the nine-page PDF; no local download was made.
+   Covers PSG tone/noise register and independent attenuation behavior.
+   The Tandy's integrated implementation is not asserted to be a
+   discrete SN76489AN. Do not import every variant's noise feedback or
+   undocumented zero-divider behavior into the Tandy description.
+
+3. Existing shared adapter, unchanged source copied into this folder:
+   DOSSND.C, DOSSND.H, DOSGUARD.H, win30/DRIVER/PITCORE.H.
+   Base source commit: 61d6c3cb5580d5f1c31a2950fc9eb67ef4d846fa.
+   BIOS/session and speaker-busy refusal, cooperative resource checking,
+   PIT note range45..96, timer2-only programming and port61 bit retention
+   are implementation facts. They are not protection from arbitrary
+   hardware writes by outside code, nor physical-machine certification.
+
+ARTICLE.TXT is original writing. VOICE.C/DEMOCORE.H/HOSTQA.C are original
+teaching examples. Copied adapter source retains its existing license.
+No proprietary compiler, OS, private music, or installed driver changes.

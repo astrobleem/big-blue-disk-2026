@@ -1,0 +1,114 @@
+{
+  "public_issue": "2026-10 / Issue 1",
+  "license": "GPL-3.0-only",
+  "files": {
+    "GO.EXE": {
+      "bytes": 20291,
+      "sha256": "fecfc6452856260bf8b225a302fcc00defc3155765f65a8972311944a2ce7802",
+      "qualified_sha256": "fecfc6452856260bf8b225a302fcc00defc3155765f65a8972311944a2ce7802",
+      "unchanged_from_native_qualification": true
+    },
+    "ISSUE.DAT": {
+      "bytes": 362,
+      "sha256": "42eb3014298fd9b4f3e00ec48c3e1ea54573d66248d3eb435ecb51d6528b2af8",
+      "qualified_sha256": "42eb3014298fd9b4f3e00ec48c3e1ea54573d66248d3eb435ecb51d6528b2af8",
+      "unchanged_from_native_qualification": true
+    },
+    "README.TXT": {
+      "bytes": 812,
+      "sha256": "121e3b82efc5b4f19385832e528127fddaad15e80f4a83180a048a5c93f62e9a",
+      "qualified_sha256": "2fe16b13fdffe0fcd6115fcefd36646b4ba31577d176120fb049d3f81895a7a9",
+      "unchanged_from_native_qualification": false
+    },
+    "SOURCES.TXT": {
+      "bytes": 407,
+      "sha256": "73dda3930c5450a6caa0f10df9a69c3bcd99baad0738f2633f0707cfb05558e9",
+      "qualified_sha256": "9bfd045ea33d788e8439ba969a0e5cb74fad6abcc59d6d26c8290ea3b734d78d",
+      "unchanged_from_native_qualification": false
+    },
+    "ALFREDO/ALFREDO.EXE": {
+      "bytes": 18183,
+      "sha256": "b273f64efdc01fee94a1bb4b0be31c7586e497d0ad445604dbd113eeee1238ef",
+      "qualified_sha256": "b273f64efdc01fee94a1bb4b0be31c7586e497d0ad445604dbd113eeee1238ef",
+      "unchanged_from_native_qualification": true
+    },
+    "ARTICLES/CAMERA.CGA": {
+      "bytes": 16384,
+      "sha256": "1de7ce95fcc8813b7275257f4130baaadfc7200d864bba91ca63e0f92c71a381",
+      "qualified_sha256": "1de7ce95fcc8813b7275257f4130baaadfc7200d864bba91ca63e0f92c71a381",
+      "unchanged_from_native_qualification": true
+    },
+    "ARTICLES/CAMERA.TXT": {
+      "bytes": 5043,
+      "sha256": "0160f24615f521e50dfd344e2be4b2a4d49a43ae8563701bb898770157a4d0f2",
+      "qualified_sha256": "0160f24615f521e50dfd344e2be4b2a4d49a43ae8563701bb898770157a4d0f2",
+      "unchanged_from_native_qualification": true
+    },
+    "ARTICLES/CAMNOTES.TXT": {
+      "bytes": 4472,
+      "sha256": "0f757efb0f2844209598e8a79c1328eec88c395b83659be827bd7ffc14b4b924",
+      "qualified_sha256": "0f757efb0f2844209598e8a79c1328eec88c395b83659be827bd7ffc14b4b924",
+      "unchanged_from_native_qualification": true
+    },
+    "FILLERS/V2/DRUGWAR.EXE": {
+      "bytes": 11943,
+      "sha256": "986854cd83a5286dd4944affc8fde79ada2f9d68fe59835fbaeb91464be508ab",
+      "qualified_sha256": "986854cd83a5286dd4944affc8fde79ada2f9d68fe59835fbaeb91464be508ab",
+      "unchanged_from_native_qualification": true
+    },
+    "FILLERS/V2/HORSE.EXE": {
+      "bytes": 12937,
+      "sha256": "5ac429b86ba09a12a8eeab1eb16ae3216402ac9886e936bff9b72a8a0e34ec7e",
+      "qualified_sha256": "5ac429b86ba09a12a8eeab1eb16ae3216402ac9886e936bff9b72a8a0e34ec7e",
+      "unchanged_from_native_qualification": true
+    },
+    "FILLERS/V2/START.TXT": {
+      "bytes": 1324,
+      "sha256": "bb17a6d0c826b87f9241177b865f239c0e04e9a2d7d79a87ae6500cc1ed6ef46",
+      "qualified_sha256": "bb17a6d0c826b87f9241177b865f239c0e04e9a2d7d79a87ae6500cc1ed6ef46",
+      "unchanged_from_native_qualification": true
+    },
+    "KROZ/PLAY.TXT": {
+      "bytes": 3022,
+      "sha256": "9e3a539c136255c9223bd5e9a93d23c69b7fb22d64ba4298d0976e49c23fcb34",
+      "qualified_sha256": "9e3a539c136255c9223bd5e9a93d23c69b7fb22d64ba4298d0976e49c23fcb34",
+      "unchanged_from_native_qualification": true
+    },
+    "KROZ/ROOM.EXE": {
+      "bytes": 17447,
+      "sha256": "a57d28c1d0207ee343be96813ab52634a12d4c88afde56f1945789224d8a041d",
+      "qualified_sha256": "a57d28c1d0207ee343be96813ab52634a12d4c88afde56f1945789224d8a041d",
+      "unchanged_from_native_qualification": true
+    },
+    "SOUND/ARTICLE.TXT": {
+      "bytes": 4373,
+      "sha256": "00afc15b611874eb1f0c18d6f759fe73d7d3e7f1947a7e8c9cc3db17ccd97f68",
+      "qualified_sha256": "00afc15b611874eb1f0c18d6f759fe73d7d3e7f1947a7e8c9cc3db17ccd97f68",
+      "unchanged_from_native_qualification": true
+    },
+    "SOUND/LICENSE.TXT": {
+      "bytes": 35823,
+      "sha256": "230184f60bae2feaf244f10a8bac053c8ff33a183bcc365b4d8b876d2b7f4809",
+      "qualified_sha256": "230184f60bae2feaf244f10a8bac053c8ff33a183bcc365b4d8b876d2b7f4809",
+      "unchanged_from_native_qualification": true
+    },
+    "SOUND/README.TXT": {
+      "bytes": 886,
+      "sha256": "d121b6735aa5fa24186e8d92837516294f34ee20d543749887304511445d1d41",
+      "qualified_sha256": "d121b6735aa5fa24186e8d92837516294f34ee20d543749887304511445d1d41",
+      "unchanged_from_native_qualification": true
+    },
+    "SOUND/REFS.TXT": {
+      "bytes": 2107,
+      "sha256": "f6d223bf7b2f291e53bbc619c7768fcb78c5988df1e335e07f67913ffa8fbe03",
+      "qualified_sha256": "f6d223bf7b2f291e53bbc619c7768fcb78c5988df1e335e07f67913ffa8fbe03",
+      "unchanged_from_native_qualification": true
+    },
+    "SOUND/VOICE.EXE": {
+      "bytes": 9995,
+      "sha256": "55f185eb67ffa565ce1169196eafdc8ddc7d0fed67c37116e15fdea7c439a660",
+      "qualified_sha256": "55f185eb67ffa565ce1169196eafdc8ddc7d0fed67c37116e15fdea7c439a660",
+      "unchanged_from_native_qualification": true
+    }
+  }
+}

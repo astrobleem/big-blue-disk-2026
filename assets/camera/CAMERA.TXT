@@ -1,0 +1,103 @@
+CIVILIZATION, REBOOTED: CAMERA OBSCURA
+
+If you were stranded in the past, or rebuilding from scratch, which
+inventions could you explain well enough to make? Civilization, Rebooted
+explores that question one invention at a time: what it does, how it works,
+what materials it needs, and what it makes possible next. Think practical
+curiosity, with things to build and try. A complete survival manual would
+need rather more pages.
+
+We begin with a camera obscura: a dark box or room with a small hole that
+projects a live image of the outside scene onto the opposite surface. The
+image moves as the scene moves; nothing is recorded. No lens or electricity
+is required. It is a useful first step toward understanding optics and the
+image-making that later cameras build upon.
+
+Our version uses a shoebox. Add a pinhole and a paper screen, and a branch
+outside appears inside, waving upside down. The shoes were probably more
+complicated.
+
+Camera obscura means "dark chamber." Long before photography, people used
+room-size and portable versions for drawing and entertainment. Today we'll
+build one, watch the picture appear, and work out why it turns the world
+over.
+
+THE HOLE DOES THE SORTING
+
+Imagine a tree outside your box. Light reflected from every part of it
+spreads in many directions. Without a front wall, light from different parts
+would overlap across your screen. You would get illumination, but no
+recognizable tree.
+
+The wall blocks almost everything. Its tiny opening admits only a narrow
+bundle from each point in the scene. In ordinary air, those rays travel
+essentially straight. Light from the treetop travels downward through the
+hole and keeps going downward, reaching the bottom of the screen. Light from
+the foot of the trunk travels upward and reaches the top.
+
+Draw those two paths and they cross at the hole. Nothing has grabbed the
+tree and turned it over. Geometry has done the job quietly.
+
+BUILD A SMALL DARK CHAMBER
+
+Gather a shoebox with its lid, aluminum foil, tracing paper, opaque tape,
+scissors, a fine pin, and a dark towel or cloth. Use translucent tracing
+paper, not ordinary opaque drawing paper. An adult should handle sharp-tool
+work for children; cut on a protected surface, away from hands, and put the
+pin away afterward.
+
+1. Choose the two short ends of the box. In one, cut a square opening about
+an inch across. Tape flat foil over it, sealing every edge. This is the
+front.
+
+2. Prick one small, clean hole in the center of the foil. Start with just
+the pin's tip, roughly half a millimeter across if you can manage it. Don't
+shove the whole shaft through. Replace torn foil rather than trying to mend
+the hole.
+
+3. In the opposite end, cut a window several inches across, leaving a sturdy
+cardboard border. Stretch tracing paper flat across it and tape all four
+edges. This is your screen. Leave it intact: you will look at the paper from
+outside the box.
+
+4. Fit the lid and seal its seams, corners, and any accidental gaps with
+opaque tape. Light should enter through the pinhole; the screen is the one
+deliberately translucent wall.
+
+5. Set up in shade or a dim room facing a brightly lit outdoor scene. A
+building or tree with strong light-and-dark shapes makes a better first
+subject than a blank wall. Keep the Sun out of the view. Never aim this
+viewer at the Sun or look through its pinhole at the Sun; this project is
+not a solar viewer.
+
+6. Point the foil end toward your subject. Look at the tracing-paper end
+from a comfortable reading distance. Drape the dark cloth over the screen,
+your head, and the space between them to block stray light. Leave the front
+opening uncovered and keep breathing space. Stay still while your eyes
+adjust.
+
+A dim, inverted picture should emerge. This is a live projection on the
+paper. Cover the pinhole with a finger and it vanishes immediately. Uncover
+it and the world resumes.
+
+TROUBLESHOOT LIKE AN OPTICIAN
+
+Nothing visible? Shade the viewing side more thoroughly, check that the hole
+is open, and try a brighter subject. Ordinary room lighting often
+disappoints. Bright scenery and a genuinely dark viewing space are the
+useful combination.
+
+Then try a fresh foil patch with a slightly larger hole. More light gets in,
+so the image brightens, but each point spreads over a larger patch of
+screen. Detail blurs. A smaller hole usually sharpens the picture while
+making it dimmer, up to a limit: make it extremely small and light's wave
+behavior, called diffraction, spreads the image again. "Smaller" eventually
+stops meaning "better."
+
+Keep both foil patches and compare them on the same scene. You have acquired
+an aperture control for approximately the cost of a sandwich wrapper.
+
+There is no shutter to press. Watch a branch move, then put your hand over
+the opening and restore the darkness. For a moment, a cardboard box has let
+you see how a picture happens. That is a respectable afternoon's work for
+something rescued from a closet.

@@ -1,0 +1,28 @@
+BIG BLUE DISK 2026 FILLER SLICES - LAUNCH INSTRUCTIONS
+
+On DOS / Tandy 1000 EX:
+  CD \FILLERS\V2
+  HORSE
+or
+  DRUGWAR
+
+If launched from an assembly host, copy HORSE.EXE and DRUGWAR.EXE plus
+README.TXT to the DOS disk. These standalone small-model programs do
+not require an installation, data files, modern Python or compiler files.
+Target: 8088, DOS, 640KB, standard 80-column color text mode.
+
+HORSE: type horse 1-6 + Enter, bet type 1 Win / 2 Place + Enter,
+then stake + Enter. ESC finishes animation quickly. Q + Enter quits
+at results. R + Enter resets bankroll. 0 at horse selection exits.
+DRUGWAR: B/S buy/sell, T travel, D/W bank transfers, P repay,
+F final score, R restart, Q quit; each action uses Enter.
+All dollar amounts and contraband are fictional.
+
+First playable slices: automated source-matched DOS tests passed.
+Physical keyboard and captured-screen acceptance remain pending.
+EVIDENCE contains labeled reconstructed output PNGs, not screenshots,
+plus test logs/maps/manifests. It is assembly evidence, not disk payload.
+SOURCE is corresponding original C89 source. No compiler files included.
+V2 fixes finish labels/order, a fresh 11-row results screen, and a
+compact bet summary throughout the race. V1 remains in the parent folder.
+See README.TXT for rules, bounds, build constraints and originality.

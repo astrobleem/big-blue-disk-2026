@@ -1,0 +1,23 @@
+name: Validate October issue
+on: [push, pull_request, workflow_dispatch]
+permissions:
+  contents: read
+jobs:
+  host-and-package:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - uses: actions/setup-python@v7.0.0
+        with:
+          python-version: '3.12'
+      - name: Compile and run portable C checks
+        run: python tests/host_checks.py
+      - name: Audit exact runtime and source payload
+        run: python tools/validate.py
+      - name: Build and verify release packages
+        run: python tools/package.py
+      - uses: actions/upload-artifact@v7.0.2
+        with:
+          name: october-2026-issue-1
+          path: build/release/*
+          if-no-files-found: error

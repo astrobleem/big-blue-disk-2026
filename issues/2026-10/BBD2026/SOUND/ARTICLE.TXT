@@ -1,0 +1,87 @@
+YOUR TANDY HAS ANOTHER VOICE
+
+Three notes, a drum, and one more tune
+
+The familiar Tandy sound generator has three square-wave tone channels
+and one noise channel. That is four channels, but only three independent
+ordinary pitched tones. The noise channel is useful percussion, not an
+unrestricted fourth melody channel.
+
+On the Tandy 1000 EX, the technical reference describes those four
+generators summed with the external signal from PIT counter 2. The PC
+speaker timer can therefore add another pitched square wave. This is
+EX-specific routing evidence: check another model's schematic before
+assuming its speaker, jack, gates and mute controls work the same way.
+
+A tone is cheap; a recording is not
+
+Load a divider into PIT channel 2 and the hardware makes the repeated
+waveform. Your program changes it at note boundaries, not every sample.
+The accompanying VOICE demo uses the existing cooperative DOS adapter:
+
+    DosSoundAcquire(DS_PSG|DS_PIT);
+    DosSoundPitNote(72,1);       /* C5, explicit attack */
+    DosSoundPitNote(0,0);       /* off */
+    DosSoundRelease();
+
+Check every return value; the complete source does. The melody API
+accepts MIDI notes 45..96. Its plain pitched mode is separate from PWM
+sampled speech, which repeatedly reloads the timer thousands of times
+per second. Do not mistake a cheap fourth melody for cheap recorded
+voices. Speaker tone and sampled speech share channel 2 and cannot own
+it simultaneously.
+
+Expression without a new waveform
+
+The PSG's oscillator stays square. Software can make its attack, decay
+and release sound different by scheduling attenuation changes. Delayed
+vibrato changes the pitch divider by small amounts. Neither operation
+turns it into a sampled instrument or a physical choir.
+
+VOICE 3 holds one note, applies a short envelope, then starts vibrato.
+It never restarts the note merely to change volume. The foreground
+scheduler uses ordinary BIOS ticks, about 55 milliseconds apart. That
+is a deliberately coarse musical clock; it is not sample timing. The
+CPU waits with HLT between ticks. No timer-0 divisor or hardware IRQ
+handler is changed. Applications can do other work between sound steps.
+
+Volume has an off step
+
+Each PSG channel has its own attenuation: 0 is loudest, 1..14 add nominal
+2 dB steps, and 15 is off. Attenuation 14 is the last finite level, not
+15. Adding a fade requires clamping and an explicit terminal mute.
+The extra PIT melody has fixed hardware amplitude and binary on/off;
+it has no equivalent PSG attenuation register. Desktop mixer gains do
+not prove the same balance at the EX's electrically summed speaker.
+
+Noise is a musical tradeoff
+
+Select periodic or white noise, then select one of three fixed clock
+rates or the tone-3 clock. Fixed-rate white noise can suggest hats and
+snares; periodic noise can give a buzzy percussion accent. Writing the
+noise control resets its sequence, so write it for an attack, not for
+every volume fade. Tone-3-clocked noise follows that tone's divider:
+changing the third melodic voice also changes the percussion clock.
+Using that mode costs independence, even though both outputs can sound.
+
+VOICE 2 alternates a periodic accent and white-noise hat. It uses fixed
+rates so no melodic divider is borrowed. Its volume fades without
+rewriting noise control. VOICE 1 adds a PIT melody over three PSG tones.
+Run VOICE with no argument for all three short, original examples.
+
+Leave the machine quiet
+
+Run from plain DOS on a known-compatible Tandy. Escape or Ctrl-C stops.
+The adapter refuses Windows sessions and an already active speaker;
+errors and normal completion release the owner and mute owned sound.
+It preserves unrelated port-61 control bits and touches PIT channel 2
+only. A cooperative lease is not universal protection against a TSR,
+BIOS beep or unrelated program that writes the ports behind its back.
+Do not run competing sound programs. This kit installs no driver.
+
+Sources: Tandy 1000 EX Technical Reference (1986), Cat.25-1510,
+p.32, Sound (routing); Texas Instruments, SN76489AN manual
+(registers, attenuation, tone and noise); the pinned DOSSND/PITCORE
+implementation supplied with this kit. REFS.TXT records scope.
+Emulator qualification is reported separately. No physical choir or
+physical EX listening test is claimed.
