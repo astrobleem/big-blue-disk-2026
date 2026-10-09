@@ -1,0 +1,46 @@
+{
+  "baseline_public_free_bytes": 549888,
+  "baseline_private_issue02_free_bytes": 548864,
+  "allocation_unit": 1024,
+  "costs": {
+    "rave_original_public": 98304,
+    "screen_candidate": 61440,
+    "flow88_candidate": 51200,
+    "revised_fillers_alongside_old": 67584,
+    "composite_allowance": 98304
+  },
+  "remaining_public_free_bytes": 173056,
+  "remaining_private_baseline_free_bytes": 172032,
+  "rave_files": {
+    "RSRAVE.EXE": 54138,
+    "ORIGINAL.RBG": 1920,
+    "PLAY.BAT": 38,
+    "README.TXT": 1199,
+    "LICENSE.TXT": 35823,
+    "NOTICE.TXT": 724,
+    "MUSIC.TXT": 506
+  },
+  "rave_release": "https://github.com/astrobleem/radio-shack-rave/releases/tag/v0.6.0-showcase-experimental",
+  "rave_zip_sha256": "0f6403dc619feba11a9cef051ceb6e9daca9233f33db9034342a7dbf9b2b994a",
+  "rave_original_title": "Circuit After Hours",
+  "rave_maximum_exe_block_excluding_psp_environment": 119616,
+  "rave_optional_far_cache_bytes": 9216,
+  "reader_maximum_exe_block_excluding_psp_environment": 1068352,
+  "wega_existing_files": {
+    "DIAG.EXE": 13919,
+    "ORDER0.WBI": 32782,
+    "ORDER1.WBI": 32782,
+    "README.TXT": 1863
+  },
+  "wega_existing_allocated_bytes": 84992,
+  "limits": [
+    "Conservative append: revised fillers counted alongside October fillers",
+    "No source/PNG/QA or compiler/OS payload on floppy",
+    "No roster change; reader currently supports six entries",
+    "Physical performance/composite hues/reader Rave return remain untested here",
+    "96KiB composite allowance is a budget, not an implemented new demo",
+    "Reader MZ maxalloc=FFFF: actual resident size and largest free child block not measured; require integrated Rave launch/return memory check before roster inclusion."
+  ],
+  "reader_mz_minimum_image_plus_extra_bytes": 27984,
+  "reader_mz_maximum_extra_paragraphs": 65535
+}
