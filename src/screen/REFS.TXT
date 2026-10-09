@@ -1,0 +1,40 @@
+Primary references and evidence scope
+
+1. Tandy Corporation, Tandy 1000 EX Technical Reference Manual, 1986,
+   Cat. No.25-1510, archived at:
+   https://archive.org/details/tandy1000extechnicalreferencemanual
+   Read the item's FULL TEXT. Page numbers in the scan's OCR are not
+   reliable, so sections are named instead. No manual download or copied
+   manual pages are included. Checked against that text on 2026-10-09:
+   - "Video System Logic": 256K of RAM shared by CPU and video; video
+     normally needs 16K or 32K of it.
+   - "Graphics Mode" and "Graphics Memory Usage": the five graphics modes;
+     16-colour 320x200 needs 32K, 160x200 needs 16K; two pixels per byte,
+     first pixel in the high nibble; 8000-byte interleaved banks.
+   - "Video Array Registers" and "Array Palette Registers": address to port
+     3DA, data to port 3DE; palette registers 10h-1Fh, four bits (blue,
+     green, red, intensity), write-only; video is disabled while the
+     address is 10h or higher; load during vertical retrace.
+   - I/O map, port 3DA read: bit 3 vertical retrace, bit 0 display inactive.
+   - Port 3DF: CRT page bits 0-2, processor page bits 3-5; odd processor
+     page gives a 16K window at B800h, even a 32K window.
+   - I/O map: CPU clock rate bit, boot ROM default 7.16 MHz.
+
+2. NOT in the manual text checked, and therefore NOT verified here:
+   - BIOS mode numbers 8 and 9 (160x200x16, 320x200x16) and the PCjr/Tandy
+     INT 10h AH=05h page services. Observed working in DOSBox-X's Tandy
+     machine only. Another BIOS may differ; demo 2 refuses to flip unless
+     the BIOS pages for modes 8 and 9 fall in the same 32K pair.
+   - Where the EX reserves video RAM within its 256K. The manual's memory
+     map figure was not legible in the scan. INT 12h reported 624 KB in the
+     emulator with 16 KB and 32 KB video modes both in use; that does not
+     show what a real EX reserves.
+   - The plain-DOS guard in DOSGUARD.H (Tandy marker byte 21h at F000:C000)
+     is copied unchanged from src/sound; it is not a model identifier.
+
+3. Existing shared guard, unchanged: DOSGUARD.H from src/sound.
+
+ARTICLE.TXT, SCREEN.C, DEMOCORE.H and HOSTQA.C are original teaching
+examples written by Claude and edited by Chad Doebelin. No proprietary
+compiler, OS, BIOS or historical program is included. Emulator results are
+reported separately and are not hardware qualification.

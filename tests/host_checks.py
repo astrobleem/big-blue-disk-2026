@@ -6,7 +6,7 @@ def main():
     cc=args.compiler or shutil.which('cc') or shutil.which('gcc')
     if not cc:raise SystemExit('A host C compiler is required; it is not bundled.')
     out=ROOT/'build/host';out.mkdir(parents=True,exist_ok=True)
-    suites=[('reader',['CORE.C','TEST.C']),('kroz',['GAME.C','TEST.C']),('fillers',['TEST.C']),('alfredo',['EQUIV.C','REFERENCE.C'])]
+    suites=[('reader',['CORE.C','TEST.C']),('kroz',['GAME.C','TEST.C']),('fillers',['TEST.C']),('alfredo',['EQUIV.C','REFERENCE.C']),('screen',['HOSTQA.C'])]
     results={}
     for name,files in suites:
         exe=out/(name+('.exe' if args.watcom else ''))

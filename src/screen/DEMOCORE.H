@@ -79,4 +79,87 @@ static void sceneRow(unsigned y,unsigned char *row)
         row[i]=(unsigned char)((pixelIndex(2u*i,y)<<4)|pixelIndex(2u*i+1u,y));
 }
 
+/* ---- Demo 2: page flipping in 160x200x16 --------------------------------
+ * 160x200 uses two interleaved banks of 8000 bytes, 80 bytes per scan line:
+ * scan line y starts at (y&1)*0x2000 + (y>>1)*80. Palette plan: 0 black,
+ * 1 bar, 2 grid, 3 tearing marker, 4 clean marker, 15 text.
+ */
+#define ROW8_BYTES   80u
+#define FLIP_TOP     24u
+#define FLIP_BOTTOM  176u
+#define BAR_W        12u
+#define BAR_COLOR    1u
+#define GRID_COLOR   2u
+#define MARK_TEAR    3u
+#define MARK_CLEAN   4u
+#define NO_BAR       0xffffu
+
+static unsigned rowOffset8(unsigned y)
+{
+    return (unsigned)((y&1u)*BANK_STRIDE + (y>>1)*ROW8_BYTES);
+}
+
+/* Reference definition of one pixel; flipByte() must agree with it. */
+static unsigned flipPixel(unsigned x,unsigned y,unsigned barx)
+{
+    if(y<FLIP_TOP||y>=FLIP_BOTTOM)return 0;
+    if(x>=barx&&x<barx+BAR_W)return BAR_COLOR;
+    if(x%20u==0)return GRID_COLOR;
+    return 0;
+}
+
+/* Background (grid only) byte for byte column bx. */
+static unsigned char gridByte(unsigned bx)
+{
+    return (unsigned char)(((2u*bx)%20u==0)?(GRID_COLOR<<4):0);
+}
+
+/* Fast form used by the demo: background byte plus the bar's pixels. */
+static unsigned char flipByte(unsigned bx,unsigned barx,unsigned char bg)
+{
+    unsigned x0=2u*bx;
+    unsigned char v=bg;
+    if(x0>=barx&&x0<barx+BAR_W)v=(unsigned char)((v&0x0f)|(BAR_COLOR<<4));
+    if(x0+1u>=barx&&x0+1u<barx+BAR_W)v=(unsigned char)((v&0xf0)|BAR_COLOR);
+    return v;
+}
+
+/* Bouncing bar position, 3 pixels per frame, within 0..160-BAR_W. */
+static unsigned barPos(unsigned frame)
+{
+    unsigned span=160u-BAR_W;
+    unsigned p=(unsigned)(((unsigned long)frame*3ul)%(2ul*span));
+    return p<span?p:2u*span-p;
+}
+
+/* ---- Demo 3: retrace palette split in 320x200x16 -------------------------
+ * One picture of diagonal blocks uses palette indices 1..SPLIT_N. The demo
+ * loads one set of colours in vertical retrace, counts scan lines, and loads
+ * another set mid-frame, so the same pixels change colour at the split.
+ */
+#define SPLIT_N      7u
+#define SPLIT_MIN    8u
+#define SPLIT_MAX    190u
+#define SPLIT_STEP   4u
+static const unsigned char splitTop[SPLIT_N]    = {1,9,3,11,9,3,1};
+static const unsigned char splitBottom[SPLIT_N] = {4,12,6,14,12,6,4};
+
+static unsigned splitIndex(unsigned x,unsigned y)
+{
+    if(y<SCENE_TOP||y>=SCENE_BOTTOM)return 0;
+    return 1u+((x>>4)+(y>>4))%SPLIT_N;
+}
+static void splitRow(unsigned y,unsigned char *row)
+{
+    unsigned i;
+    for(i=0;i<ROW_BYTES;i++)
+        row[i]=(unsigned char)((splitIndex(2u*i,y)<<4)|splitIndex(2u*i+1u,y));
+}
+static unsigned moveSplit(unsigned split,int dir)
+{
+    if(dir<0)return split>SPLIT_MIN+SPLIT_STEP?split-SPLIT_STEP:SPLIT_MIN;
+    if(dir>0)return split+SPLIT_STEP<SPLIT_MAX?split+SPLIT_STEP:SPLIT_MAX;
+    return split;
+}
+
 #endif

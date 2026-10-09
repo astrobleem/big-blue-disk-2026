@@ -1,0 +1,104 @@
+YOUR TANDY HAS ANOTHER SCREEN
+
+Sixteen colors, a palette you can rewrite, and a beam you can race
+
+CGA gave PC owners four colors at a time. The Tandy 1000 EX manual lists
+five graphics modes: 320x200 in four colors, 320x200 in sixteen, 160x200
+in sixteen, and 640x200 in two or four colors. This piece is about the
+two sixteen-color modes and three tricks they make cheap. Each has a small
+original demo. Run SCREEN 1, SCREEN 2 or SCREEN 3, or SCREEN alone for all
+three. Space moves to the next demo and Escape returns to DOS.
+
+Two pixels in every byte
+
+A sixteen-color pixel is four bits, so a byte holds two. The first pixel
+is the high nibble. At 320x200 that is 160 bytes per row and 32,000 bytes
+in all; at 160x200 it is 80 bytes per row and 16,000. Rows are not stored
+in order. As on CGA they are interleaved in banks of 8000 bytes:
+
+    320x200x16: row y starts at (y AND 3) * 2000h + (y / 4) * 160
+    160x200x16: row y starts at (y AND 1) * 2000h + (y / 2) * 80
+
+Video memory is not separate. The EX has 256 KB of RAM that the CPU and
+the video logic share, and the manual says video normally needs only 16 or
+32 KB of it. The demos report what the BIOS says it reserved; see the
+last section for what that does and does not prove.
+
+A palette you can rewrite
+
+The four bits of a pixel do not name a color directly. They pick one of
+sixteen palette registers, and each register holds a 4-bit color: blue,
+green, red and intensity. So you choose among the sixteen base colors,
+not a bigger set, but you can reassign which is which.
+
+    VIDEO MEMORY       PALETTE REGISTERS        SCREEN
+    byte = [3][5] ---> register 3 = cyan  ----> cyan area
+                  \--> register 5 = magenta --> magenta area
+
+Write the register number plus 10h to port 3DA, then the color to port
+3DE. The registers are write-only; nothing can read them back. There is
+a catch: while the address is 10h or higher the screen shows the register
+being loaded, not your picture. The manual says to finish the load and
+write an address below 10h again, ideally inside the vertical retrace.
+
+Demo 1 draws water and fire once and never touches the pixels again.
+Every frame it waits for retrace, rotates a short ramp of colors through
+its palette registers, and the bands appear to flow. No pixel moves.
+
+Page flipping
+
+Tearing happens when you change the picture while the beam is drawing it:
+the top of the screen shows the old frame and the bottom shows the new
+one. The cure is two pages. Draw into the hidden one, then switch which
+page the display reads, during the vertical retrace.
+
+Port 3DF holds a CRT page number (bits 0-2) and a processor page number
+(bits 3-5), each selecting a 16 KB page. The CRT page is what the display
+shows; the processor page is what appears at B800h for the CPU. Per the
+manual, an odd processor page gives a 16 KB window and an even one 32 KB.
+Two 160x200 pages are 16 KB each, which is why demo 2 uses that mode.
+
+Demo 2 does both. TEAR races the beam: it counts scan lines after
+retrace and redraws a moving bar halfway down the screen, so the bar
+breaks in two. CLEAN draws the hidden page and flips in retrace, and the
+bar stays whole. Press T to switch; it also switches by itself.
+
+A different palette halfway down
+
+Demo 3 loads one set of colors in retrace, counts scan lines by watching
+status bit 0 on port 3DA, then loads a second set while the beam is still
+drawing. The same pixels turn from cool to warm at a line you choose with
+the Up and Down keys. Bit 3 of that status port is vertical retrace and
+bit 0 is display inactive.
+
+Read the honest part. Loading mid-frame blanks the screen while the
+address is 10h or higher, so you may see a thin glitch row at the split.
+The count of lines is a software loop on an 8088: an interrupt arriving
+at the wrong moment can make the split land a line early or late. The
+manual says the boot ROM defaults the CPU to 7.16 MHz, so even the loop
+speed is not fixed. In emulation the split landed where we asked. We
+have not measured jitter on a real machine.
+
+Leave the screen as you found it
+
+SCREEN checks it is running under plain DOS on a Tandy, not Windows. It
+hooks only INT 23h, and restores that on exit. Because the palette cannot
+be read, it loads the standard sixteen colors and then asks the BIOS to
+set the video mode you started in. It stops cleanly if the retrace bit
+never changes. It installs nothing resident and leaves the timer alone.
+
+What is not verified
+
+* The BIOS mode numbers (8 and 9) and its page services (INT 10h, AH=5)
+  come from PCjr/Tandy BIOS practice. The 1000 EX manual excerpts used
+  for this piece do not describe them. We watched them work in DOSBox-X.
+* Where the EX reserves video RAM inside its 256 KB is not confirmed.
+  Demo 2 only flips inside the 32 KB pair the BIOS itself uses for
+  320x200x16, and refuses to run if the BIOS reports anything else.
+* Whether a 7-register palette load fits inside the real retrace, and how
+  wide the glitch row is, are untested on hardware.
+* Everything here ran in an emulator. No physical Tandy 1000 EX was used.
+
+Sources: Tandy 1000 EX Technical Reference Manual (1986), Cat. No.
+25-1510: video system, graphics modes, video array registers and I/O map.
+REFS.TXT records exactly what was checked and what was not.
