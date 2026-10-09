@@ -1,0 +1,10 @@
+Corrected exact-binary native VRAM samples, DOSBox-X Tandy/8086_prefetch.
+SC1.RAW and SC3.RAW: actual16384-byte mode08h CPU-window captures.
+SC1.PAL and SC3.PAL: program-side palette-write trace; not readback.
+SCREEN1-QA.PNG applies the recorded cycle palette to the native pixels.
+SCREEN3-PIXELS.PNG uses identity colors to show pixel-index layout only;
+it does NOT show the raster split, glitch row, retrace timing or CRT hues.
+Decoded at160x200 and horizontally doubled to320x200, nearest neighbor.
+Captures came from the same fresh repeat-build binary hashed in the manifest.
+The old TEAR/CLEAN images were removed. The flip path is now disabled.
+No physical Tandy/WEGA capture or high-color claim is made.

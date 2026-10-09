@@ -1,0 +1,36 @@
+Primary references and scope
+
+1. Tandy 1000 MS-DOS Programmer's Reference Manual, 1984, BIOS services,
+   printed pp.196-198, archived at:
+   https://manualzz.com/doc/55015064/tandy-1000-ms-dos-programmer-s-reference-manual
+   Documents BIOS 08h=160x200x16, 09h=320x200x16, 0Ah=640x200x4.
+   AH=05h AL=80h reads CRT/CPU selectors; 81h sets CPU via BL;
+   82h sets CRT via BH; 83h sets both. These extensions are distinct
+   from ordinary alpha-page selection with AL below 80h.
+
+2. Tandy 1000 EX Technical Reference Manual, 1986, Cat.No.25-1510,
+   video appendix pp.7,12,19 (PDF pages244,249,256):
+   https://manuals.plus/m/a5450fe6dcd66bb4902629b9e4200258fee5acfaffa08a96b2eea50c07d828c2.pdf
+   https://archive.org/details/tandy1000extechnicalreferencemanual
+   Confirms 16/32KB frame sizes, interleaved banks, high nibble first,
+   shared onboard RAM, write-only palette 3DA/3DE, latch restoration,
+   status bits, and 16KB selectors at 3DF. An even CPU selector exposes
+   32KB; an odd one exposes 16KB. In 32KB modes CRT bit0 is ignored.
+
+The corrected program uses mode08h only, one16KB frame in the caller's
+existing odd window. It never selects an extra frame. Mode09h and the
+second-page experiment are not runnable. Matching selector values alone
+is not considered allocation proof. A future 32KB/two-frame port needs
+an explicit DOS/EX reservation contract and separate qualification.
+
+DOSGUARD.H is copied unchanged from src/sound. Its Tandy marker is a
+compatibility check, not an EX model identifier. Windows probe branches
+were tested with controlled injected responses; no hardware demo was
+launched under Windows. Real physical timing is untested.
+
+Native allocation claims distinguish EXE image, minimum and maximum
+extra paragraphs, PSP/environment and video. See candidate manifest;
+172 extra paragraphs from the old build was a minimum, not actual use.
+
+Original Claude/Chad work; review corrections by Codex for Chad. GPLv3.
+No compiler, OS, BIOS, manual pages or historical programs are included.

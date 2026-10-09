@@ -1,0 +1,2 @@
+SCREENQA text=1 cursor=1 hook=1 sound61=1
+DONE stop=0 error=6 frames=0 palette_loads=0 retrace_timeouts=1 mode_restored=1

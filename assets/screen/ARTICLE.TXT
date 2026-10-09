@@ -1,0 +1,82 @@
+YOUR TANDY HAS ANOTHER SCREEN
+
+Sixteen colors, a palette you can rewrite, and a beam you can race
+
+The Tandy 1000 has more graphics choices than CGA. BIOS mode 08h is
+160x200 in sixteen colors and needs one 16 KB frame. Mode 09h is
+320x200 in sixteen colors and needs 32 KB. These mode numbers are
+listed in Tandy's MS-DOS Programmer's Reference, not guessed from an
+emulator. SCREEN now runs two experiments in the smaller mode.
+
+Run SCREEN 1 for palette cycling, SCREEN 3 for a palette split, or
+SCREEN alone for both. Space advances; Escape or Ctrl-C returns to DOS.
+Start in ordinary 80-column BIOS text mode 3 on a compatible Tandy.
+SCREEN 2 refuses to run: the proposed page-flip experiment needs a
+second frame whose ownership we have not established.
+
+Two pixels in every byte
+
+Each sixteen-color pixel takes four bits. A byte holds two pixels, the
+first in the high nibble. The 160-wide mode uses 80 bytes per row. Rows
+alternate between two banks, with each bank spaced 2000h bytes apart:
+
+    row y starts at (y AND 1) * 2000h + (y / 2) * 80
+
+The 320-wide mode instead uses four banks and 160 bytes per row. A
+larger display address window does not mean the program owns more RAM.
+
+Video shares the EX's onboard 256 KB with the CPU. SCREEN saves the
+caller's existing 16 KB text window, and accepts only matching odd
+CPU/CRT selectors. The BIOS must keep that same window in mode 08h.
+The program never selects an extra page or writes a 32 KB framebuffer.
+It restores the full saved window, active text page, cursor position,
+cursor shape and interrupt hook on return. It does not measure the
+machine's total conventional-memory or video reservation sizes.
+
+A palette you can rewrite
+
+Pixel values select sixteen write-only palette registers. Each holds
+one of the sixteen IRGB colors: blue, green, red and intensity bits.
+This remaps colors; it does not create arbitrary true-color pixels.
+
+Write 10h plus the register number to port 3DA, then its color to 3DE.
+While the palette address is selected, normal video is disabled and
+register data is displayed. Finish by writing an address below 10h.
+SCREEN uses 01h, and keeps each load short with interrupts disabled.
+
+Demo 1 draws a sampled water/fire scene once. It then rotates short
+color ramps during retrace. Pixels stay in place while colors appear
+to flow. The 160-wide picture samples the original 320-wide design.
+
+Why page flipping is disabled
+
+Two pages can prevent tearing: draw off-screen, then select the other
+frame during retrace. But a BIOS page number is a selector, not a DOS
+allocation receipt. Matching two selectors to a 32 KB pair was not
+sufficient proof of ownership. SCREEN 2 now refuses before changing
+mode, palette, selectors or video memory. Its original proposal is
+preserved in the original contribution branch for future work.
+
+A different palette halfway down
+
+Demo 3 changes colors mid-frame. It polls status bit 3 for vertical
+retrace and counts bit-0 blanking pulses before a second palette load.
+Up/Down moves the requested split. Interrupts can move the effective
+split, and loading the palette mid-frame can make a glitch row. This
+is an experimental effect, not a calibrated raster timing routine.
+
+Return and evidence
+
+SCREEN refuses Windows before hardware writes. It touches no sound
+ports or timer programming, leaves nothing resident, and handles
+Escape, Ctrl-C and INT 23h. Retrace polling has a BIOS-tick timeout.
+Palette registers cannot be read back; return to DOS uses BIOS-standard
+text colors. A caller's custom palette is not an exact-save contract.
+
+Fresh MSC6 builds repeat byte-for-byte. Host/native helper checks,
+bounded runs, actual BIOS-key exits, hook/cursor/text restoration and
+injected timeout/refusal checks passed in DOSBox-X. New captures record
+actual VRAM bytes and the program's palette-write trace. They are not
+beam screenshots and do not verify a physical split or composite hue.
+No physical EX timing, palette-load blanking or monitor result is
+qualified. See REFS.TXT and the candidate manifest for exact limits.
