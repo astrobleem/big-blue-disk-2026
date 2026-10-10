@@ -1,0 +1,22 @@
+frames=3906 pictures=1284 episode_ticks=2976 worst_frame_fine=4083 fluid_steps=34
+music_events=3422 music_late=92 music_late_max_fine=736 sfx=21 psg_bytes=16361
+scene_change_worst_fine=9279
+time_restore=56232 time_pond=101962 time_actors=309788 time_commit=97971 time_palette=55884
+scene00 frames=62 worst_fine=120 late_fine=13
+scene01 frames=140 worst_fine=870 late_fine=163
+scene02 frames=87 worst_fine=806 late_fine=64
+scene03 frames=52 worst_fine=784 late_fine=222
+scene04 frames=153 worst_fine=670 late_fine=216
+scene05 frames=95 worst_fine=650 late_fine=156
+scene06 frames=49 worst_fine=623 late_fine=137
+scene07 frames=97 worst_fine=2532 late_fine=411
+scene08 frames=73 worst_fine=711 late_fine=197
+scene09 frames=60 worst_fine=732 late_fine=104
+scene10 frames=72 worst_fine=555 late_fine=197
+scene11 frames=65 worst_fine=4083 late_fine=485
+scene12 frames=121 worst_fine=541 late_fine=63
+scene13 frames=132 worst_fine=1086 late_fine=107
+scene14 frames=11 worst_fine=263 late_fine=101
+rect_peak=26 rect_merges=0 vram_bytes=3503295 pal_writes=1753 sound=1
+scenes=1111111111111110
+previous_mode=3 restored_mode=3

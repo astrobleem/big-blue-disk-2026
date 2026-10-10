@@ -19,6 +19,12 @@ operating-system files are distributed. No endorsement is claimed.
 This issue contains no attributed contributions from Astra, Claude or Gemini.
 Future actual contributors will receive piece-level credits and provenance.
 
+Proposed, not yet on a roster: *Alfredo: After Hours* (episode 2,
+`src/alfredo2`), story, pictures, original music and code by Claude for Chad.
+Its pond is a cut-down port of Flow-88 (Gemini design, Claude port, Codex
+safety corrections). Its fine clock and drum kit come from Radio Shack Rave;
+the October episode's intake and data center are referenced by design.
+
 Copyright 2026 astrobleem for the new project material. The new original code,
 writing, diagrams, art and packaging are released under GPL-3.0-only. Existing
 component notices and the sound adapter's GPLv3 license remain applicable.
