@@ -1,0 +1,200 @@
+{
+ "name": "alfredo2",
+ "base_head": "44522aee6f1a7bfe64e3c227050af38c3e5b43d3",
+ "roster_status": "PROPOSED_ONLY for the November Alfredo slot; October unchanged",
+ "mz_allocation": {
+  "ALFREDO": {
+   "file_bytes": 61800,
+   "image_bytes": 61736,
+   "minimum_extra_paragraphs": 1038,
+   "maximum_extra_paragraphs": 4096,
+   "far_buffers_bytes": 65536,
+   "minimum_total_bytes_excluding_psp_environment": 143888,
+   "maximum_total_bytes_excluding_psp_environment": 192816,
+   "note": "MZ bounds plus two 32 KB far buffers from DOS; not a physical memory measurement."
+  }
+ },
+ "native": {
+  "result": "PASS",
+  "compiler": "OpenWatcom 2.0 wcl -bt=dos -ms -0 -ox -w4 (tools/alfredo2_build_ow.sh); MSC6 BUILD.BAT provided but not yet run",
+  "msc6_built": false,
+  "machine": "DOSBox-X machine=tandy, cputype=8086_prefetch, core=normal, memsize=1",
+  "checks": "tests/alfredo2_dos.py: /QA virtual clock 42 stills equal host frames; /AUTO at 3000 and 450 cycles; non-Tandy refusal",
+  "physical_qualified": false,
+  "logs": {
+   "QA.TXT": {
+    "pictures": "2207",
+    "frames": "6096",
+    "fluid_steps": "339",
+    "music_late": "0",
+    "music_late_max_fine": "127",
+    "sfx": "22",
+    "scenes": "1111111111111110",
+    "previous_mode": "3",
+    "restored_mode": "3"
+   },
+   "AUTO3000.TXT": {
+    "pictures": "2165",
+    "frames": "122998",
+    "fluid_steps": "185",
+    "music_late": "0",
+    "music_late_max_fine": "117",
+    "sfx": "22",
+    "scenes": "1111111111111110",
+    "previous_mode": "3",
+    "restored_mode": "3"
+   },
+   "AUTO450.TXT": {
+    "pictures": "1284",
+    "frames": "3906",
+    "fluid_steps": "34",
+    "music_late": "92",
+    "music_late_max_fine": "736",
+    "sfx": "21",
+    "scenes": "1111111111111110",
+    "previous_mode": "3",
+    "restored_mode": "3"
+   }
+  }
+ },
+ "limits": [
+  "emulator cycles uncalibrated against a physical Tandy 1000 EX",
+  "no physical speed, memory, CRT or listening qualification",
+  "no MSC6 build yet; the executable is an OpenWatcom 2 build of the same source",
+  "integrated GO launch/return not yet run"
+ ],
+ "source": {
+  "src/alfredo2/ALFREDO.C": {
+   "bytes": 13219,
+   "sha256": "b4bfba35f2e809573ffc4133134ae1d1fc037898203cdde1d283cb22c62dc639"
+  },
+  "src/alfredo2/BUILD.BAT": {
+   "bytes": 614,
+   "sha256": "1be6f7870af3d680e546be3d4f7d6ab5569f7c83f5cf0c43b03df804af5087fd"
+  },
+  "src/alfredo2/CAST.H": {
+   "bytes": 7007,
+   "sha256": "5825b22c86c38b5bafc40f2b5109a9d380098534e10238edfa01670eae960427"
+  },
+  "src/alfredo2/CLOCK.H": {
+   "bytes": 2535,
+   "sha256": "1d1c98612f045dffe41e72e7b9156c5afc429a8709c305a949af6af6a249ead7"
+  },
+  "src/alfredo2/DOSGUARD.H": {
+   "bytes": 664,
+   "sha256": "8391e26bb677643a3ade2a5cf97eb0b796ca91f21bf54f55d174d215db32aa5c"
+  },
+  "src/alfredo2/DOSSND.H": {
+   "bytes": 661,
+   "sha256": "d66756fbd46ae4317fb4e798ea34ec386db7199689b2bfa813277df3efec049b"
+  },
+  "src/alfredo2/ENGINE.H": {
+   "bytes": 20963,
+   "sha256": "816ba134c3f9f2ed8b3335f93746b36ad0eaed848ccd777968eac0ea02b72256"
+  },
+  "src/alfredo2/FLUID.H": {
+   "bytes": 15183,
+   "sha256": "0ca1bcbac1c391abad024f8aa001e9d754d5c1a2a15987cdc2927cb864549c3c"
+  },
+  "src/alfredo2/HOSTQA.C": {
+   "bytes": 5831,
+   "sha256": "e3c097503a211105929f3bfb3c8bbf94e9e9897b445ac1710739ef79530b2b09"
+  },
+  "src/alfredo2/MUSIC.H": {
+   "bytes": 12582,
+   "sha256": "705bb4caee20edd8e93eb84e865f154f4752d0d687abc0fe7325df6a1d6ac73c"
+  },
+  "src/alfredo2/SCENES.H": {
+   "bytes": 38652,
+   "sha256": "fbcb7c0e56d2b4bd73cde9f644499cf3fb1ac0ac20baf376ea22c02d5f42992a"
+  },
+  "src/alfredo2/SOUND.H": {
+   "bytes": 9746,
+   "sha256": "9630e28b16d1b33bd0c1817f63d863921c90914c1eeef11d15f4d8ba3f002f6c"
+  },
+  "src/sound/DOSSND.C": {
+   "bytes": 6324,
+   "sha256": "63b06aee31e022d453e19e9dd9af6a2443ac2c58e4833f03f75885d71d8a23ac"
+  },
+  "src/sound/DOSSND.H": {
+   "bytes": 661,
+   "sha256": "d66756fbd46ae4317fb4e798ea34ec386db7199689b2bfa813277df3efec049b"
+  },
+  "src/sound/DOSGUARD.H": {
+   "bytes": 664,
+   "sha256": "8391e26bb677643a3ade2a5cf97eb0b796ca91f21bf54f55d174d215db32aa5c"
+  },
+  "src/sound/win30/DRIVER/PITCORE.H": {
+   "bytes": 942,
+   "sha256": "a842095954c2e08cf0d8003ec6df9a3a7d90f8c73641f2b813fe8cea197a1f0e"
+  },
+  "tools/alfredo2_score.py": {
+   "bytes": 12444,
+   "sha256": "5274cfabd2c3a27c8987fd9be71c932107e1f28323bc53669a504a625c488fe5"
+  },
+  "tools/alfredo2_build_ow.sh": {
+   "bytes": 967,
+   "sha256": "479c9f4d114f6f3e68ca8193242676fd4326ba318cf8786e1a1a36bcfec40984"
+  },
+  "tools/alfredo2_cap.py": {
+   "bytes": 902,
+   "sha256": "c27e9dd49800a6484793255e20e4b987bfa6795f13b955dc02d70949d382f1f0"
+  },
+  "tools/alfredo2_video.py": {
+   "bytes": 6491,
+   "sha256": "d57ba312906a163eb2dcdc59fbb653ec93ab543040eb2af8accd654efb97d352"
+  },
+  "tools/alfredo2_candidate.py": {
+   "bytes": 4179,
+   "sha256": "9b8a410f1956f12b0d19748bb104d42d6e2e2251b93b42ea678c3f10d2483d43"
+  },
+  "tests/alfredo2_dos.py": {
+   "bytes": 5431,
+   "sha256": "2d7cc0b4dd6e3f2c8fdff5872cf3698328b7eea2bd515d225196102fb6ac2fbf"
+  },
+  "docs/ALFREDO2.md": {
+   "bytes": 6192,
+   "sha256": "c047327af58ba93019d86f81a222ab0f910ff0ea1a6f6c984fbffd409f520cf2"
+  }
+ },
+ "runtime": {
+  "issues/2026-11/BBD2026/ALFREDO/ALFREDO.EXE": {
+   "bytes": 61800,
+   "sha256": "1b247cc5f088099e9423b1164b17e37660c7645a70fa3d4fb77831804965dd69"
+  },
+  "issues/2026-11/BBD2026/ALFREDO/README.TXT": {
+   "bytes": 1222,
+   "sha256": "4821c6ded73d19379b414b9220b73da9eb6a7cd9b162b8d9776847ecf5908325"
+  },
+  "issues/2026-11/BBD2026/ALFREDO/LICENSE.TXT": {
+   "bytes": 35823,
+   "sha256": "230184f60bae2feaf244f10a8bac053c8ff33a183bcc365b4d8b876d2b7f4809"
+  }
+ },
+ "evidence": {
+  "docs/candidates/alfredo2/AUTO3000.TXT": {
+   "bytes": 1123,
+   "sha256": "df8accb3d316c5886ac0585990af334939294543b749d24f7726c687c8454f64"
+  },
+  "docs/candidates/alfredo2/AUTO450.TXT": {
+   "bytes": 1139,
+   "sha256": "785f7d56658f0e961898b2cba9bc5e9b3a61ef01660d8d877f974cc269772733"
+  },
+  "docs/candidates/alfredo2/DOSCHECK.LOG": {
+   "bytes": 2565,
+   "sha256": "4f6a89dd6db987bd14d04582cbba7311b13bc282efe7dc869aac2bf9296be5d1"
+  },
+  "docs/candidates/alfredo2/NOTANDY.TXT": {
+   "bytes": 66,
+   "sha256": "a7b384ab17f68cd4d7f68eaf4249f5c89bf8ee8eb62474064bacec54a6b808a2"
+  },
+  "docs/candidates/alfredo2/QA.TXT": {
+   "bytes": 1095,
+   "sha256": "f756f5ce616d5f00cc79e62233bee18afcf0e333a0b7e3aaa65da1f761748fbc"
+  },
+  "docs/candidates/alfredo2/STILLS.PNG": {
+   "bytes": 44741,
+   "sha256": "c2d2c7c977e0f2276f76e5bd6a38136e81e6cc82b7d47e714a04177e51515e96"
+  }
+ }
+}

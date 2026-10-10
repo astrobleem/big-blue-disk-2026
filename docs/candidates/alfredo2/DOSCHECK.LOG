@@ -1,0 +1,49 @@
+PASS QA: all fourteen episode scenes shown (1111111111111110)
+PASS QA: all 22 sound effects fired (22)
+PASS QA: no music event late on the virtual clock
+PASS QA: PSG claimed through the shared sound owner
+PASS QA: text mode 3 restored
+PASS QA: three 32000-byte stills per scene (42)
+PASS QA: DOS stills equal the host-rendered frames, pixel for pixel (42/42)
+INFO 3000 cycles: frames=122998 worst_frame=116 ms fluid_steps=185 music_late=0 late_max=25 ms
+INFO   scene_change_worst_fine=1384
+INFO   scene00 frames=71 worst_fine=186 late_fine=0
+INFO   scene01 frames=178 worst_fine=192 late_fine=58
+INFO   scene02 frames=97 worst_fine=139 late_fine=0
+INFO   scene03 frames=77 worst_fine=121 late_fine=21
+INFO   scene04 frames=192 worst_fine=159 late_fine=8
+INFO   scene05 frames=108 worst_fine=134 late_fine=3
+INFO   scene06 frames=60 worst_fine=121 late_fine=12
+INFO   scene07 frames=398 worst_fine=340 late_fine=18
+INFO   scene08 frames=120 worst_fine=148 late_fine=27
+INFO   scene09 frames=97 worst_fine=159 late_fine=15
+INFO   scene10 frames=83 worst_fine=146 late_fine=5
+INFO   scene11 frames=272 worst_fine=540 late_fine=67
+INFO   scene12 frames=133 worst_fine=209 late_fine=2
+INFO   scene13 frames=242 worst_fine=255 late_fine=115
+INFO   scene14 frames=22 worst_fine=216 late_fine=68
+INFO   scenes=1111111111111110
+PASS 3000 cycles: whole episode played in real time
+PASS 3000 cycles: text mode restored
+INFO 450 cycles: frames=3906 worst_frame=876 ms fluid_steps=34 music_late=92 late_max=158 ms
+INFO   scene_change_worst_fine=9279
+INFO   scene00 frames=62 worst_fine=120 late_fine=13
+INFO   scene01 frames=140 worst_fine=870 late_fine=163
+INFO   scene02 frames=87 worst_fine=806 late_fine=64
+INFO   scene03 frames=52 worst_fine=784 late_fine=222
+INFO   scene04 frames=153 worst_fine=670 late_fine=216
+INFO   scene05 frames=95 worst_fine=650 late_fine=156
+INFO   scene06 frames=49 worst_fine=623 late_fine=137
+INFO   scene07 frames=97 worst_fine=2532 late_fine=411
+INFO   scene08 frames=73 worst_fine=711 late_fine=197
+INFO   scene09 frames=60 worst_fine=732 late_fine=104
+INFO   scene10 frames=72 worst_fine=555 late_fine=197
+INFO   scene11 frames=65 worst_fine=4083 late_fine=485
+INFO   scene12 frames=121 worst_fine=541 late_fine=63
+INFO   scene13 frames=132 worst_fine=1086 late_fine=107
+INFO   scene14 frames=11 worst_fine=263 late_fine=101
+INFO   scenes=1111111111111110
+PASS 450 cycles: whole episode played in real time
+PASS 450 cycles: text mode restored
+PASS non-Tandy machine: refuses with a message
+PASS: Alfredo After Hours native emulator checks
